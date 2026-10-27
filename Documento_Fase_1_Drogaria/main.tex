@@ -299,7 +299,7 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \item A URL ou referencia da receita aponta para documento armazenado fora do banco; o armazenamento externo devera oferecer controle de acesso apropriado.
 \item As regras de validade, assinatura e dispensacao de receitas variam conforme o tipo de documento e medicamento. O sistema devera respeitar os requisitos aplicaveis, sem pretender substituir uma analise regulatoria completa.
 \item Os relatorios operacionais serao implementados como consultas SQL e, se util, views. Nao sera criada uma entidade de negocio chamada Relatorio.
-\item Esta secao consolida os requisitos que orientaram as etapas seguintes. O dicionario registra os atributos e tipos do modelo logico; o modelo fisico, o script SQL e a validacao do banco serao tratados nas proximas etapas.
+\item Esta secao consolida os requisitos que orientaram as etapas seguintes. O dicionario registra os atributos e tipos do modelo logico, e a analise de normalizacao e apresentada neste documento. O modelo fisico, o script SQL e a validacao do banco serao tratados nas proximas etapas.
 \end{itemize}
 
 \section{Modelos de dados}
@@ -340,7 +340,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \singlespacing
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
-\begin{longtable}{@{}|L{2.7cm}|L{2.2cm}|L{8.4cm}|L{1.8cm}|@{}}
+\begin{longtable}{@{}|L{2.7cm}|L{2.2cm}|L{8.0cm}|L{2.2cm}|@{}}
 \caption{Dicionario de dados do sistema}\\
 \hline
 \textbf{Atributo} & \textbf{Tipo MySQL} & \textbf{Descricao} & \textbf{Chaves}\\
@@ -482,7 +482,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{valor_total}{DECIMAL(12,2)}{Valor final do item apos a aplicacao do desconto.}{--}
 \dictrow{fk_Venda_id}{INT}{Venda a que o item pertence.}{FK}
 \dictrow{fk_Produto_id}{INT}{Produto vendido.}{FK}
-\dictrow{fk_Item_Receita_id}{INT}{Item de receita associado a venda, quando houver.}{FK/UNIQUE}
+\dictrow{fk_Item_Receita_id}{INT}{Item de receita associado a venda, quando houver.}{FK/\allowbreak UNIQUE}
 
 \dictgroup{Pagamento}
 \dictrow{id}{INT}{Identificador do pagamento.}{PK}
@@ -504,7 +504,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{motivo}{TEXT}{Motivo informado para o cancelamento da venda.}{--}
 \dictrow{data_hora}{DATETIME}{Data e hora em que o cancelamento foi registrado.}{--}
 \dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo cancelamento.}{FK}
-\dictrow{fk_Venda_id}{INT}{Venda cancelada; o modelo marca a referencia como unica.}{FK/UNIQUE}
+\dictrow{fk_Venda_id}{INT}{Venda cancelada; o modelo marca a referencia como unica.}{FK/\allowbreak UNIQUE}
 
 \dictgroup{Cliente}
 \dictrow{id}{INT}{Identificador do cliente.}{PK}
@@ -553,7 +553,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{ultimo_acesso}{DATETIME}{Data e hora do ultimo acesso registrado.}{--}
 \dictrow{senha_hash}{VARCHAR(255)}{Hash da senha armazenado para autenticacao; nao representa a senha em texto puro.}{--}
 \dictrow{fk_Perfil_Acesso_id}{INT}{Perfil de acesso associado ao usuario.}{FK}
-\dictrow{fk_Funcionario_id}{INT}{Funcionario associado a conta; o modelo marca a referencia como unica.}{FK/UNIQUE}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario associado a conta; o modelo marca a referencia como unica.}{FK/\allowbreak UNIQUE}
 
 \dictgroup{Perfil\_Acesso}
 \dictrow{id}{INT}{Identificador do perfil de acesso.}{PK}
@@ -590,7 +590,90 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 
 \end{longtable}
 \endgroup
+
+\section{Análise de normalização}
+\subsection{Escopo e dependências funcionais consideradas}
+Foram avaliadas as 31 relações do modelo lógico. A análise considera as chaves primárias, as chaves estrangeiras marcadas como únicas no modelo e as regras de negócio que definem identificadores alternativos. As dependências funcionais são inferidas dessas chaves: cada chave candidata determina os demais atributos da respectiva relação. Como o projeto ainda não possui dados de implementação, esta é uma avaliação estrutural do esquema.
+
+O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas. As regras RB29 e RB32 definem, respectivamente, a unicidade do código de barras informado e a identificação de lote pela combinação de produto e número do lote. Essas duas restrições ainda precisam ser explicitadas no modelo lógico ou no modelo físico para que sejam garantidas pelo banco.
+
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{|L{3.5cm}|L{6.0cm}|L{5.2cm}|}
+\caption{Chaves consideradas na analise de normalizacao}\label{tab:chaves-normalizacao}\\
+\hline
+\textbf{Relacao} & \textbf{Chave primaria e candidatas} & \textbf{Observacao}\\
+\hline
+\endfirsthead
+\caption[]{Chaves consideradas na analise de normalizacao (continuacao)}\\
+\hline
+\textbf{Relacao} & \textbf{Chave primaria e candidatas} & \textbf{Observacao}\\
+\hline
+\endhead
+\hline
+\multicolumn{3}{|r|}{Continua na proxima pagina.}\\
+\endfoot
+\hline
+\endlastfoot
+Produto & \texttt{id}; \url{codigo_barras} & Código de barras único quando informado (RB29); restrição a formalizar.\\\hline
+Categoria & \texttt{id} & --\\\hline
+Fabricante & \texttt{id} & --\\\hline
+Medicamento & \texttt{id} & Chave primaria compartilhada com a chave estrangeira para Produto.\\\hline
+\url{Principio_Ativo} & \texttt{id} & --\\\hline
+Lote & \texttt{id}; (\url{fk_Produto_id}, \url{numero_lote}) & Chave alternativa definida pela RB32; restrição composta a formalizar.\\\hline
+\url{Movimentacao_Estoque} & \texttt{id} & --\\\hline
+\url{Ajuste_Estoque} & \texttt{id} & --\\\hline
+Fornecedor & \texttt{id} & --\\\hline
+\url{Telefone_Fornecedor} & \texttt{id} & --\\\hline
+\url{Email_Fornecedor} & \texttt{id} & --\\\hline
+Compra & \texttt{id} & --\\\hline
+\url{Item_Compra} & \texttt{id} & --\\\hline
+Recebimento & \texttt{id} & --\\\hline
+\url{Item_Recebimento} & \texttt{id} & --\\\hline
+Venda & \texttt{id} & --\\\hline
+\url{Item_Venda} & \texttt{id}; \url{fk_Item_Receita_id} & A referencia a item de receita e unica quando informada.\\\hline
+Pagamento & \texttt{id} & --\\\hline
+Estorno & \texttt{id} & --\\\hline
+Cancelamento & \texttt{id}; \texttt{fk\_Venda\_id} & Uma venda pode ter no maximo um cancelamento.\\\hline
+Cliente & \texttt{id} & --\\\hline
+\url{Telefone_Cliente} & \texttt{id} & --\\\hline
+\url{Email_Cliente} & \texttt{id} & --\\\hline
+\url{Endereco_Cliente} & \texttt{id} & --\\\hline
+Funcionario & \texttt{id} & --\\\hline
+Usuario & \texttt{id}; \texttt{fk\_Funcionario\_id} & Cada funcionario pode possuir no maximo uma conta.\\\hline
+\url{Perfil_Acesso} & \texttt{id} & --\\\hline
+Receita & \texttt{id} & --\\\hline
+\url{Item_Receita} & \texttt{id} & --\\\hline
+Prescritor & \texttt{id} & --\\\hline
+\url{Medicamento_Principio_Ativo} & (\url{fk_Medicamento_id}, \url{fk_Principio_Ativo_id}) & Chave primaria composta; nao ha atributos nao-chave.\\\hline
+\end{longtable}
+\endgroup
+
+\subsection{Primeira Forma Normal (1FN)}
+As relações atendem estruturalmente à 1FN: cada campo representa um valor por registro, sem listas de telefones, e-mails, endereços ou princípios ativos armazenadas dentro de uma única coluna. Os contatos de clientes e fornecedores foram separados em relações próprias, e a associação entre medicamentos e princípios ativos foi representada por uma relação associativa. Campos textuais, como observações e descrições, são tratados como valores atômicos do ponto de vista relacional; seu conteúdo livre não representa uma lista estruturada de atributos.
+
+\subsection{Segunda Forma Normal (2FN)}
+As relações cuja chave primária é simples atendem à 2FN, pois não existe uma dependência parcial em uma chave de um único atributo. A única chave primária composta é a de \texttt{Medicamento\_Principio\_Ativo}; essa relação contém somente as duas chaves estrangeiras que compõem a própria chave, sem atributo não-chave sujeito a dependência parcial. A chave alternativa composta de \texttt{Lote}, definida por produto e número do lote, identifica o registro completo; essa regra deve ser implementada como restrição única composta.
+
+\subsection{Terceira Forma Normal (3FN)}
+Considerando as dependências funcionais identificadas, não há atributo não-chave que determine outro atributo não-chave dentro da mesma relação. Dados de categorias e fabricantes ficam em suas próprias relações, dados de fornecedores não são repetidos em compras, dados de perfil não são copiados para usuários e os contatos múltiplos foram decompostos em relações separadas. Assim, não foram identificadas dependências transitivas que exijam nova decomposição para atingir a 3FN.
+
+\subsection{Forma Normal de Boyce-Codd (BCNF)}
+Pelas dependências funcionais identificadas, os determinantes não triviais são chaves candidatas: as chaves primárias simples, as referências únicas de \texttt{Usuario}, \texttt{Cancelamento} e \texttt{Item\_Venda}, a chave alternativa de código de barras quando preenchida e a identificação composta de lote. Sob esse conjunto de dependências, as relações atendem à BCNF. A conclusão depende da implementação das restrições de unicidade apontadas no Quadro~\ref{tab:chaves-normalizacao} e da confirmação de que não há outras regras de negócio que criem dependências funcionais.
+
+\subsection{Pontos de atenção para a implementação}
+Os itens a seguir não constituem, por si só, violações de BCNF, mas precisam de definição para preservar a consistência dos dados:
+\begin{itemize}
+\item O atributo \texttt{valor\_total} de \texttt{Item\_Venda} pode ser calculado a partir de quantidade, preço unitário e desconto. Se for armazenado como fotografia do valor praticado, o banco ou a aplicação deverá garantir que ele seja consistente com esses dados.
+\item \texttt{Lote.custo\_unitario} e \texttt{Item\_Recebimento.custo\_unitario\_real} podem representar informações sobrepostas. É necessário definir se o custo pertence ao lote, a cada recebimento, ou se ambos têm significados distintos, por exemplo custo de referência do lote e custo efetivo de cada entrada.
+\item A unicidade de atributos naturais como CPF, CNPJ, login e registro profissional do prescritor não foi inferida sem regra explícita no modelo. Os requisitos devem dizer quais identificadores são únicos antes da criação das restrições físicas.
+\item A situação da compra pode ser derivada das quantidades recebidas em relação aos itens solicitados. Se o atributo \texttt{status} for mantido, sua atualização deve permanecer sincronizada com os recebimentos.
+\end{itemize}
+
 \section{Conclusao}
-O levantamento estabelece o escopo funcional inicial do sistema de gestao de drogaria e registra as regras de integridade, rastreabilidade, seguranca e operacao consolidadas. Esta especificacao servira de base para o DER conceitual em notacao de Peter Chen, seguido do modelo logico, da analise de normalizacao e da implementacao fisica no MySQL.
+O levantamento estabelece o escopo funcional inicial do sistema de gestao de drogaria e registra as regras de integridade, rastreabilidade, seguranca e operacao consolidadas. O documento apresenta o DER conceitual em notacao de Peter Chen, o modelo logico e a analise estrutural de normalizacao. Essas etapas servirao de base para a implementacao fisica no MySQL, a elaboracao do script SQL e a validacao do banco.
 
 \end{document}
