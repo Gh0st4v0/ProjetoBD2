@@ -21,6 +21,9 @@
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\usepackage{caption}
 
 \hypersetup{
   pdftitle={Sistema de Gestao de Drogaria},
@@ -299,6 +302,36 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \item Esta secao consolida os requisitos que orientaram as etapas seguintes. O dicionario registra os atributos e tipos do modelo logico; o modelo fisico, o script SQL e a validacao do banco serao tratados nas proximas etapas.
 \end{itemize}
 
+\section{Modelos de dados}
+As figuras a seguir apresentam os modelos conceitual e logico elaborados para o sistema de gestao de drogaria.
+
+\clearpage
+\begin{landscape}
+\thispagestyle{fancy}
+\begin{figure}[p]
+\centering
+\captionsetup{font=small,labelfont=bf,justification=centering}
+\caption{Diagrama entidade-relacionamento (DER)}
+\includegraphics[width=0.96\linewidth,height=0.78\textheight,keepaspectratio]{../Drogaria_DER_Final.png}
+\par\smallskip
+\small\textbf{Fonte:} Elaborado pelos autores (2026).
+\end{figure}
+\end{landscape}
+
+\clearpage
+\begin{landscape}
+\thispagestyle{fancy}
+\begin{figure}[p]
+\centering
+\captionsetup{font=small,labelfont=bf,justification=centering}
+\caption{Modelo logico relacional}
+\includegraphics[width=0.96\linewidth,height=0.78\textheight,keepaspectratio]{../Drogaria_Logico.png}
+\par\smallskip
+\small\textbf{Fonte:} Elaborado pelos autores (2026).
+\end{figure}
+\end{landscape}
+
+\clearpage
 \section{Dicionario de dados}
 O dicionario de dados descreve os atributos do modelo logico, seus tipos previstos para MySQL, suas finalidades e as chaves registradas no modelo. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). A obrigatoriedade de preenchimento, valores padrao e regras de dominio serao detalhados junto com as restricoes do modelo fisico.
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="1F51-D3-12FF-AC-F98A-FB-11">
+<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="71DB-A1-9222-80-248A-DC-74">
     <InfoDiagrama ID="1">
         <Versao Valor="3.2.0"/>
         <Autores/>
@@ -10,7 +10,7 @@
         <Alinhamento_h Valor="60"/>
         <Zoom Valor="75"/>
         <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
-        <Localizacao Left="0" Top="420"/>
+        <Localizacao Left="160" Top="420"/>
         <Realce Valor="false"/>
     </InfoDiagrama>
     <Entidade ID="2">
@@ -996,7 +996,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
         </Cardinalidade>
@@ -1284,7 +1284,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
         </Cardinalidade>
@@ -1501,7 +1501,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
         </Cardinalidade>
@@ -1905,7 +1905,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
         </Cardinalidade>
@@ -2483,7 +2483,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
         </Cardinalidade>
@@ -7524,7 +7524,7 @@
         <Ocupado01 ID="1006"/>
         <Ocupado02 ID="-1"/>
         <Ocupado03 ID="-1"/>
-        <Parcial Valor="false"/>
+        <Parcial Valor="true"/>
     </Especializacao>
     <Atributo ID="1017">
         <Bounds Height="14" Left="1547" Top="1238" Width="122"/>
@@ -7621,7 +7621,7 @@
             <Ponto Left="1877" Top="1117"/>
         </Pontos>
         <Cardinalidade ID="1037">
-            <Bounds Height="14" Left="1970" Top="1122" Width="34"/>
+            <Bounds Height="14" Left="1972" Top="1122" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_4</Texto>
             <Observacao/>
