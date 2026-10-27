@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<DIAGRAMA ID="1" TIPO="tpLogico" UniversalUnicID="F688-2-AB7E-78-5884-81-52">
+<DIAGRAMA ID="1" TIPO="tpLogico" UniversalUnicID="25CB-3-46DB-17-8875-C2-82">
     <InfoDiagrama ID="1">
         <Versao Valor="3.2.0"/>
         <Autores/>
@@ -8,15 +8,15 @@
         <Height Valor="4096"/>
         <Alinhamento_v Valor="50"/>
         <Alinhamento_h Valor="60"/>
-        <Zoom Valor="75"/>
+        <Zoom Valor="50"/>
         <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
-        <Localizacao Left="340" Top="360"/>
+        <Localizacao Left="0" Top="0"/>
         <Realce Valor="false"/>
         <SeparatorSQL Valor=";"/>
         <Prefixo Valor=""/>
     </InfoDiagrama>
     <Tabela ID="2">
-        <Bounds Height="281" Left="1468" Top="1272" Width="150"/>
+        <Bounds Height="281" Left="1468" Top="1272" Width="192"/>
         <DisablePainted Valor="false"/>
         <Texto>Produto</Texto>
         <Observacao/>
@@ -43,8 +43,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>ativo</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -54,7 +64,7 @@
             </Campo>
             <Campo>
                 <Texto>unidade_medida</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(20)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -64,7 +74,7 @@
             </Campo>
             <Campo>
                 <Texto>estoque_minimo</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -74,7 +84,7 @@
             </Campo>
             <Campo>
                 <Texto>descricao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -84,7 +94,7 @@
             </Campo>
             <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -94,7 +104,7 @@
             </Campo>
             <Campo>
                 <Texto>preco_venda</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -103,18 +113,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>codigo_barras</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(20)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -124,7 +124,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Categoria_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -134,7 +134,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Fabricante_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -153,7 +153,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[6]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -175,7 +175,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="39"/>
-                <ConstraintOrigem CamposDestino="[9]" CamposOrigem="[1]" ID="4,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[9]" CamposOrigem="[0]" ID="4,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -208,7 +208,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -218,7 +218,7 @@
             </Campo>
             <Campo>
                 <Texto>descricao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -228,7 +228,7 @@
             </Campo>
             <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(80)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -252,7 +252,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="4">
-        <Bounds Height="171" Left="1855" Top="1555" Width="150"/>
+        <Bounds Height="171" Left="1855" Top="1555" Width="190"/>
         <DisablePainted Valor="false"/>
         <Texto>Fabricante</Texto>
         <Observacao/>
@@ -279,18 +279,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>ativo</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -299,8 +289,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>ativo</Texto>
+                <Tipo>BOOLEAN</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>nome_fantasia</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -310,7 +310,7 @@
             </Campo>
             <Campo>
                 <Texto>cnpj</Texto>
-                <Tipo/>
+                <Tipo>CHAR(14)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -320,7 +320,7 @@
             </Campo>
             <Campo>
                 <Texto>razao_social</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(150)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -339,12 +339,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="5">
-        <Bounds Height="127" Left="1435" Top="1670" Width="150"/>
+        <Bounds Height="127" Left="1435" Top="1670" Width="190"/>
         <DisablePainted Valor="false"/>
         <Texto>Medicamento</Texto>
         <Observacao/>
@@ -372,7 +372,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -382,7 +382,7 @@
             </Campo>
             <Campo>
                 <Texto>exige_receita</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -392,7 +392,7 @@
             </Campo>
             <Campo>
                 <Texto>registro_anvisa</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(20)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -454,8 +454,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -465,21 +475,11 @@
             </Campo>
             <Campo>
                 <Texto>descricao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
                 <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
                 <Fkey Valor="false"/>
                 <Unique Valor="false"/>
             </Campo>
@@ -494,12 +494,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="7">
-        <Bounds Height="193" Left="1125" Top="1668" Width="150"/>
+        <Bounds Height="193" Left="1125" Top="1668" Width="190"/>
         <DisablePainted Valor="false"/>
         <Texto>Lote</Texto>
         <Observacao/>
@@ -526,8 +526,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>custo_unitario</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -537,7 +547,7 @@
             </Campo>
             <Campo>
                 <Texto>data_fabricacao</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -547,7 +557,7 @@
             </Campo>
             <Campo>
                 <Texto>numero_lote</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(50)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -556,18 +566,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>data_validade</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -577,7 +577,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Produto_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -596,7 +596,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[3]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -607,12 +607,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="42"/>
-                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[6]" ID="2,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[0]" ID="2,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="8">
-        <Bounds Height="259" Left="1143" Top="1066" Width="150"/>
+        <Bounds Height="259" Left="1142" Top="1032" Width="202"/>
         <DisablePainted Valor="false"/>
         <Texto>Movimentacao_Estoque</Texto>
         <Observacao/>
@@ -639,8 +639,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>motivo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(150)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -650,7 +660,7 @@
             </Campo>
             <Campo>
                 <Texto>tipo_movimentacao</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -659,18 +669,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -680,7 +680,7 @@
             </Campo>
             <Campo>
                 <Texto>data_hora</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -690,7 +690,7 @@
             </Campo>
             <Campo>
                 <Texto>quantidade</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -700,7 +700,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Lote_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -710,7 +710,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Ajuste_Estoque_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -720,7 +720,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Item_Venda_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -739,7 +739,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -750,7 +750,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="45"/>
-                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[3]" ID="7,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[0]" ID="7,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -761,7 +761,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="51"/>
-                <ConstraintOrigem CamposDestino="[7]" CamposOrigem="[2]" ID="9,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[7]" CamposOrigem="[0]" ID="9,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -772,7 +772,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="109"/>
-                <ConstraintOrigem CamposDestino="[8]" CamposOrigem="[3]" ID="18,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[8]" CamposOrigem="[0]" ID="18,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -804,8 +804,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>data_hora</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -815,7 +825,7 @@
             </Campo>
             <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -824,18 +834,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>motivo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(150)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -845,7 +845,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -864,7 +864,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -875,12 +875,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="48"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[1]" ID="26,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="26,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="10">
-        <Bounds Height="171" Left="397" Top="1169" Width="150"/>
+        <Bounds Height="171" Left="364" Top="1172" Width="179"/>
         <DisablePainted Valor="false"/>
         <Texto>Fornecedor</Texto>
         <Observacao/>
@@ -907,8 +907,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>cnpj</Texto>
-                <Tipo/>
+                <Tipo>CHAR(14)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -918,7 +928,7 @@
             </Campo>
             <Campo>
                 <Texto>razao_social</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(150)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -928,7 +938,7 @@
             </Campo>
             <Campo>
                 <Texto>nome_fantasia</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -937,18 +947,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>ativo</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -967,7 +967,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[3]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -1000,7 +1000,7 @@
         <Campos>
             <Campo>
                 <Texto>numero</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(20)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1010,7 +1010,7 @@
             </Campo>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1020,7 +1020,7 @@
             </Campo>
             <Campo>
                 <Texto>tipo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1030,7 +1030,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Fornecedor_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1060,12 +1060,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="121"/>
-                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[3]" ID="10,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[0]" ID="10,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="12">
-        <Bounds Height="149" Left="92" Top="1062" Width="150"/>
+        <Bounds Height="149" Left="92" Top="1062" Width="194"/>
         <DisablePainted Valor="false"/>
         <Texto>Email_Fornecedor</Texto>
         <Observacao/>
@@ -1093,7 +1093,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1103,7 +1103,7 @@
             </Campo>
             <Campo>
                 <Texto>endereco_email</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(254)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1113,7 +1113,7 @@
             </Campo>
             <Campo>
                 <Texto>tipo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1123,7 +1123,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Fornecedor_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1153,7 +1153,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="124"/>
-                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[3]" ID="10,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[0]" ID="10,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -1186,7 +1186,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1196,7 +1196,7 @@
             </Campo>
             <Campo>
                 <Texto>data_pedido</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1206,7 +1206,7 @@
             </Campo>
             <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1216,7 +1216,7 @@
             </Campo>
             <Campo>
                 <Texto>status</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1226,7 +1226,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Fornecedor_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1236,7 +1236,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1266,7 +1266,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="54"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[3]" ID="10,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="10,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1277,12 +1277,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="57"/>
-                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[1]" ID="26,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[0]" ID="26,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="14">
-        <Bounds Height="171" Left="780" Top="1396" Width="150"/>
+        <Bounds Height="171" Left="780" Top="1396" Width="216"/>
         <DisablePainted Valor="false"/>
         <Texto>Item_Compra</Texto>
         <Observacao/>
@@ -1310,7 +1310,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1320,7 +1320,7 @@
             </Campo>
             <Campo>
                 <Texto>preco_unitario</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1330,7 +1330,7 @@
             </Campo>
             <Campo>
                 <Texto>quantidade_solicitada</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1340,7 +1340,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Compra_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1350,7 +1350,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Produto_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1391,12 +1391,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="63"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[6]" ID="2,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="2,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="15">
-        <Bounds Height="171" Left="738" Top="903" Width="150"/>
+        <Bounds Height="171" Left="738" Top="903" Width="176"/>
         <DisablePainted Valor="false"/>
         <Texto>Recebimento</Texto>
         <Observacao/>
@@ -1423,18 +1423,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>data_recebimento</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1443,8 +1433,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>data_recebimento</Texto>
+                <Tipo>DATETIME</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1454,7 +1454,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Compra_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1464,7 +1464,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1483,7 +1483,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1505,12 +1505,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="69"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[1]" ID="26,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="26,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="16">
-        <Bounds Height="193" Left="238" Top="1444" Width="150"/>
+        <Bounds Height="193" Left="238" Top="1431" Width="212"/>
         <DisablePainted Valor="false"/>
         <Texto>Item_Recebimento</Texto>
         <Observacao/>
@@ -1537,8 +1537,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>quantidade_recebida</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1548,7 +1558,7 @@
             </Campo>
             <Campo>
                 <Texto>custo_unitario_real</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1557,18 +1567,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>fk_Recebimento_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1578,7 +1578,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Item_Compra_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1588,7 +1588,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Lote_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1607,7 +1607,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1618,7 +1618,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="72"/>
-                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[1]" ID="15,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[0]" ID="15,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1640,7 +1640,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="78"/>
-                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[3]" ID="7,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[0]" ID="7,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -1672,18 +1672,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>data_hora</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1692,8 +1682,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>data_hora</Texto>
+                <Tipo>DATETIME</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1703,7 +1703,7 @@
             </Campo>
             <Campo>
                 <Texto>status</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1713,7 +1713,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1723,7 +1723,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Cliente_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1742,7 +1742,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1753,7 +1753,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="87"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[1]" ID="26,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="26,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1769,7 +1769,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="18">
-        <Bounds Height="237" Left="1468" Top="942" Width="150"/>
+        <Bounds Height="237" Left="1468" Top="942" Width="206"/>
         <DisablePainted Valor="false"/>
         <Texto>Item_Venda</Texto>
         <Observacao/>
@@ -1796,8 +1796,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>preco_unitario</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1807,7 +1817,7 @@
             </Campo>
             <Campo>
                 <Texto>percentual_desconto</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(5,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1817,7 +1827,7 @@
             </Campo>
             <Campo>
                 <Texto>quantidade</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1826,18 +1836,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>valor_total</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1847,7 +1847,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Venda_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1857,7 +1857,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Produto_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1867,7 +1867,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Item_Receita_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1886,7 +1886,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[3]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1897,7 +1897,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="81"/>
-                <ConstraintOrigem CamposDestino="[5, 7]" CamposOrigem="[1, -1]" ID="17,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5, 7]" CamposOrigem="[0, -1]" ID="17,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1908,7 +1908,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="84"/>
-                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[6]" ID="2,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[0]" ID="2,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -1924,7 +1924,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="19">
-        <Bounds Height="193" Left="1188" Top="176" Width="150"/>
+        <Bounds Height="193" Left="1188" Top="176" Width="195"/>
         <DisablePainted Valor="false"/>
         <Texto>Pagamento</Texto>
         <Observacao/>
@@ -1951,8 +1951,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>status</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1962,7 +1972,7 @@
             </Campo>
             <Campo>
                 <Texto>forma_pagamento</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1971,18 +1981,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>valor</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -1992,7 +1992,7 @@
             </Campo>
             <Campo>
                 <Texto>data_hora</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2002,7 +2002,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Venda_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2021,7 +2021,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2032,7 +2032,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="93"/>
-                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[1]" ID="17,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5]" CamposOrigem="[0]" ID="17,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -2064,8 +2064,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>motivo</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2075,7 +2085,7 @@
             </Campo>
             <Campo>
                 <Texto>valor</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(12,2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2084,18 +2094,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>data_hora</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2105,7 +2105,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Pagamento_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2124,7 +2124,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[2]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2135,7 +2135,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="96"/>
-                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[2]" ID="19,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[4]" CamposOrigem="[0]" ID="19,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -2167,18 +2167,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>motivo</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2187,8 +2177,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>motivo</Texto>
+                <Tipo>TEXT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>data_hora</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2198,7 +2198,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2208,7 +2208,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Venda_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2227,7 +2227,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2238,7 +2238,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="106"/>
-                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[1]" ID="26,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[3]" CamposOrigem="[0]" ID="26,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2293,7 +2293,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2303,7 +2303,7 @@
             </Campo>
             <Campo>
                 <Texto>ativo</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2313,7 +2313,7 @@
             </Campo>
             <Campo>
                 <Texto>cpf</Texto>
-                <Tipo/>
+                <Tipo>CHAR(11)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2323,7 +2323,7 @@
             </Campo>
             <Campo>
                 <Texto>data_cadastro</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2333,7 +2333,7 @@
             </Campo>
             <Campo>
                 <Texto>data_nascimento</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2343,7 +2343,7 @@
             </Campo>
             <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2367,7 +2367,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="23">
-        <Bounds Height="149" Left="2072" Top="174" Width="150"/>
+        <Bounds Height="149" Left="2093" Top="175" Width="150"/>
         <DisablePainted Valor="false"/>
         <Texto>Telefone_Cliente</Texto>
         <Observacao/>
@@ -2394,18 +2394,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>numero</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2414,8 +2404,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>numero</Texto>
+                <Tipo>VARCHAR(20)</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>tipo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2425,7 +2425,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Cliente_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2444,7 +2444,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2460,7 +2460,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="24">
-        <Bounds Height="149" Left="1873" Top="176" Width="150"/>
+        <Bounds Height="149" Left="1873" Top="176" Width="190"/>
         <DisablePainted Valor="false"/>
         <Texto>Email_Cliente</Texto>
         <Observacao/>
@@ -2487,18 +2487,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>endereco_email</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2507,8 +2497,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>endereco_email</Texto>
+                <Tipo>VARCHAR(254)</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>tipo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2518,7 +2518,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Cliente_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2537,7 +2537,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2553,7 +2553,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="25">
-        <Bounds Height="259" Left="1626" Top="191" Width="150"/>
+        <Bounds Height="259" Left="1626" Top="191" Width="178"/>
         <DisablePainted Valor="false"/>
         <Texto>Endereco_Cliente</Texto>
         <Observacao/>
@@ -2580,18 +2580,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>logradouro</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2600,8 +2590,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>logradouro</Texto>
+                <Tipo>VARCHAR(150)</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>cep</Texto>
-                <Tipo/>
+                <Tipo>CHAR(8)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2611,7 +2611,7 @@
             </Campo>
             <Campo>
                 <Texto>cidade</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(100)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2621,7 +2621,7 @@
             </Campo>
             <Campo>
                 <Texto>bairro</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(100)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2631,7 +2631,7 @@
             </Campo>
             <Campo>
                 <Texto>complemento</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(100)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2641,7 +2641,7 @@
             </Campo>
             <Campo>
                 <Texto>uf</Texto>
-                <Tipo/>
+                <Tipo>CHAR(2)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2651,7 +2651,7 @@
             </Campo>
             <Campo>
                 <Texto>numero</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(20)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2661,7 +2661,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Cliente_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2680,7 +2680,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2723,18 +2723,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>data_admissao</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2743,8 +2733,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>data_admissao</Texto>
+                <Tipo>DATE</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2754,7 +2754,7 @@
             </Campo>
             <Campo>
                 <Texto>cargo</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(80)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2764,7 +2764,7 @@
             </Campo>
             <Campo>
                 <Texto>ativo</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2774,7 +2774,7 @@
             </Campo>
             <Campo>
                 <Texto>cpf</Texto>
-                <Tipo/>
+                <Tipo>CHAR(11)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2793,12 +2793,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="27">
-        <Bounds Height="237" Left="397" Top="416" Width="150"/>
+        <Bounds Height="237" Left="397" Top="416" Width="177"/>
         <DisablePainted Valor="false"/>
         <Texto>Usuario</Texto>
         <Observacao/>
@@ -2825,8 +2825,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>data_criacao</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2836,7 +2846,7 @@
             </Campo>
             <Campo>
                 <Texto>ativo</Texto>
-                <Tipo/>
+                <Tipo>BOOLEAN</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2846,7 +2856,7 @@
             </Campo>
             <Campo>
                 <Texto>login</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(80)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2855,18 +2865,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>ultimo_acesso</Texto>
-                <Tipo/>
+                <Tipo>DATETIME</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2876,7 +2876,7 @@
             </Campo>
             <Campo>
                 <Texto>senha_hash</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(255)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2886,7 +2886,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Perfil_Acesso_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2896,7 +2896,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Funcionario_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2915,7 +2915,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[3]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2926,7 +2926,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="134"/>
-                <ConstraintOrigem CamposDestino="[6, 7]" CamposOrigem="[1, -1]" ID="28,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[6, 7]" CamposOrigem="[0, -1]" ID="28,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -2969,18 +2969,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>nome</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -2989,8 +2979,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>nome</Texto>
+                <Tipo>VARCHAR(80)</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>descricao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3009,12 +3009,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="29">
-        <Bounds Height="237" Left="1886" Top="794" Width="150"/>
+        <Bounds Height="237" Left="1886" Top="794" Width="187"/>
         <DisablePainted Valor="false"/>
         <Texto>Receita</Texto>
         <Observacao/>
@@ -3042,7 +3042,7 @@
         <Campos>
             <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3052,7 +3052,7 @@
             </Campo>
             <Campo>
                 <Texto>data_emissao</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3062,7 +3062,7 @@
             </Campo>
             <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3072,7 +3072,7 @@
             </Campo>
             <Campo>
                 <Texto>url_documento</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(2048)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3082,7 +3082,7 @@
             </Campo>
             <Campo>
                 <Texto>tipo_documento</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3092,7 +3092,7 @@
             </Campo>
             <Campo>
                 <Texto>data_validade</Texto>
-                <Tipo/>
+                <Tipo>DATE</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3102,7 +3102,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Venda_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3112,7 +3112,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Prescritor_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3142,7 +3142,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="137"/>
-                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[1]" ID="17,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[6]" CamposOrigem="[0]" ID="17,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -3153,12 +3153,12 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="140"/>
-                <ConstraintOrigem CamposDestino="[7]" CamposOrigem="[1]" ID="31,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[7]" CamposOrigem="[0]" ID="31,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="30">
-        <Bounds Height="193" Left="2052" Top="1307" Width="150"/>
+        <Bounds Height="193" Left="2052" Top="1307" Width="214"/>
         <DisablePainted Valor="false"/>
         <Texto>Item_Receita</Texto>
         <Observacao/>
@@ -3185,8 +3185,18 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
+                <Texto>id</Texto>
+                <Tipo>INT</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="true"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>posologia</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3196,7 +3206,7 @@
             </Campo>
             <Campo>
                 <Texto>observacao</Texto>
-                <Tipo/>
+                <Tipo>TEXT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3206,7 +3216,7 @@
             </Campo>
             <Campo>
                 <Texto>quantidade_prescrita</Texto>
-                <Tipo/>
+                <Tipo>DECIMAL(10,3)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3215,18 +3225,8 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
-                <Texto>id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="true"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>fk_Receita_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3236,7 +3236,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Medicamento_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3255,7 +3255,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[3]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -3282,7 +3282,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="31">
-        <Bounds Height="149" Left="2140" Top="825" Width="150"/>
+        <Bounds Height="149" Left="2156" Top="824" Width="204"/>
         <DisablePainted Valor="false"/>
         <Texto>Prescritor</Texto>
         <Observacao/>
@@ -3309,18 +3309,8 @@
         <PlainIR Valor="true"/>
         <Campos>
             <Campo>
-                <Texto>uf_registro</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="false"/>
-                <Unique Valor="false"/>
-            </Campo>
-            <Campo>
                 <Texto>id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3329,8 +3319,18 @@
                 <Unique Valor="false"/>
             </Campo>
             <Campo>
+                <Texto>uf_registro</Texto>
+                <Tipo>CHAR(2)</Tipo>
+                <Complemento/>
+                <Dicionario/>
+                <Observacao/>
+                <Key Valor="false"/>
+                <Fkey Valor="false"/>
+                <Unique Valor="false"/>
+            </Campo>
+            <Campo>
                 <Texto>nome</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(120)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3340,7 +3340,7 @@
             </Campo>
             <Campo>
                 <Texto>registro_profissional</Texto>
-                <Tipo/>
+                <Tipo>VARCHAR(30)</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3359,14 +3359,14 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[1]" ID="-1,-1"/>
+                <ConstraintOrigem CamposDestino="[-1]" CamposOrigem="[0]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
     <Tabela ID="32">
-        <Bounds Height="105" Left="1435" Top="1906" Width="150"/>
+        <Bounds Height="105" Left="1374" Top="1907" Width="226"/>
         <DisablePainted Valor="false"/>
-        <Texto>Medicamento_Principio_Ativo_associar</Texto>
+        <Texto>Medicamento_Principio_Ativo</Texto>
         <Observacao/>
         <Dicionario/>
         <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -3392,7 +3392,7 @@
         <Campos>
             <Campo>
                 <Texto>fk_Principio_Ativo_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3402,7 +3402,7 @@
             </Campo>
             <Campo>
                 <Texto>fk_Medicamento_id</Texto>
-                <Tipo/>
+                <Tipo>INT</Tipo>
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
@@ -3421,7 +3421,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
-                <ConstraintOrigem CamposDestino="[0]" CamposOrigem="[2]" ID="6,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[0]" CamposOrigem="[0]" ID="6,0">IR chave primária</ConstraintOrigem>
             </Constraint>
             <Constraint>
                 <Nome Valor=""/>
@@ -3461,13 +3461,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="2" PontaB="5"/>
         <Pontos>
-            <Ponto Left="1543" Top="1550"/>
+            <Ponto Left="1543" Top="1551"/>
             <Ponto Left="1543" Top="1608"/>
             <Ponto Left="1510" Top="1608"/>
             <Ponto Left="1510" Top="1666"/>
         </Pontos>
         <LogicoCardinalidade ID="34">
-            <Bounds Height="14" Left="1511" Top="1560" Width="34"/>
+            <Bounds Height="14" Left="1511" Top="1561" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_1</Texto>
             <Observacao/>
@@ -3510,9 +3510,9 @@
         <Ligacoes PontaA="3" PontaB="2"/>
         <Pontos>
             <Ponto Left="1846" Top="1415"/>
-            <Ponto Left="1731" Top="1415"/>
-            <Ponto Left="1731" Top="1369"/>
-            <Ponto Left="1615" Top="1369"/>
+            <Ponto Left="1752" Top="1415"/>
+            <Ponto Left="1752" Top="1369"/>
+            <Ponto Left="1658" Top="1369"/>
         </Pontos>
         <LogicoCardinalidade ID="37">
             <Bounds Height="14" Left="1808" Top="1403" Width="34"/>
@@ -3529,7 +3529,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="38">
-            <Bounds Height="14" Left="1625" Top="1357" Width="36"/>
+            <Bounds Height="14" Left="1668" Top="1357" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_4</Texto>
             <Observacao/>
@@ -3558,9 +3558,9 @@
         <Ligacoes PontaA="4" PontaB="2"/>
         <Pontos>
             <Ponto Left="1851" Top="1640"/>
-            <Ponto Left="1733" Top="1640"/>
-            <Ponto Left="1733" Top="1455"/>
-            <Ponto Left="1615" Top="1455"/>
+            <Ponto Left="1754" Top="1640"/>
+            <Ponto Left="1754" Top="1455"/>
+            <Ponto Left="1658" Top="1455"/>
         </Pontos>
         <LogicoCardinalidade ID="40">
             <Bounds Height="14" Left="1813" Top="1628" Width="34"/>
@@ -3577,7 +3577,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="41">
-            <Bounds Height="14" Left="1625" Top="1443" Width="36"/>
+            <Bounds Height="14" Left="1668" Top="1443" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_6</Texto>
             <Observacao/>
@@ -3606,9 +3606,9 @@
         <Ligacoes PontaA="2" PontaB="7"/>
         <Pontos>
             <Ponto Left="1464" Top="1455"/>
-            <Ponto Left="1368" Top="1455"/>
-            <Ponto Left="1368" Top="1764"/>
-            <Ponto Left="1272" Top="1764"/>
+            <Ponto Left="1388" Top="1455"/>
+            <Ponto Left="1388" Top="1764"/>
+            <Ponto Left="1313" Top="1764"/>
         </Pontos>
         <LogicoCardinalidade ID="43">
             <Bounds Height="14" Left="1426" Top="1443" Width="34"/>
@@ -3625,7 +3625,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="44">
-            <Bounds Height="14" Left="1282" Top="1752" Width="36"/>
+            <Bounds Height="14" Left="1323" Top="1752" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_8</Texto>
             <Observacao/>
@@ -3654,9 +3654,9 @@
         <Ligacoes PontaA="7" PontaB="8"/>
         <Pontos>
             <Ponto Left="1200" Top="1664"/>
-            <Ponto Left="1200" Top="1493"/>
-            <Ponto Left="1218" Top="1493"/>
-            <Ponto Left="1218" Top="1322"/>
+            <Ponto Left="1200" Top="1476"/>
+            <Ponto Left="1217" Top="1476"/>
+            <Ponto Left="1217" Top="1289"/>
         </Pontos>
         <LogicoCardinalidade ID="46">
             <Bounds Height="14" Left="1168" Top="1646" Width="34"/>
@@ -3673,7 +3673,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="47">
-            <Bounds Height="14" Left="1184" Top="1332" Width="36"/>
+            <Bounds Height="14" Left="1183" Top="1299" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_10</Texto>
             <Observacao/>
@@ -3750,9 +3750,9 @@
         <Ligacoes PontaA="9" PontaB="8"/>
         <Pontos>
             <Ponto Left="1042" Top="1184"/>
-            <Ponto Left="1091" Top="1184"/>
-            <Ponto Left="1091" Top="1195"/>
-            <Ponto Left="1139" Top="1195"/>
+            <Ponto Left="1090" Top="1184"/>
+            <Ponto Left="1090" Top="1161"/>
+            <Ponto Left="1138" Top="1161"/>
         </Pontos>
         <LogicoCardinalidade ID="52">
             <Bounds Height="14" Left="1052" Top="1172" Width="34"/>
@@ -3769,7 +3769,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="53">
-            <Bounds Height="14" Left="1099" Top="1183" Width="36"/>
+            <Bounds Height="14" Left="1098" Top="1149" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_14</Texto>
             <Observacao/>
@@ -3797,13 +3797,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="10" PontaB="13"/>
         <Pontos>
-            <Ponto Left="472" Top="1165"/>
-            <Ponto Left="472" Top="1101"/>
-            <Ponto Left="472" Top="1101"/>
+            <Ponto Left="439" Top="1168"/>
+            <Ponto Left="439" Top="1102"/>
+            <Ponto Left="472" Top="1102"/>
             <Ponto Left="472" Top="1036"/>
         </Pontos>
         <LogicoCardinalidade ID="55">
-            <Bounds Height="14" Left="440" Top="1147" Width="34"/>
+            <Bounds Height="14" Left="407" Top="1150" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_15</Texto>
             <Observacao/>
@@ -3942,9 +3942,9 @@
         <Ligacoes PontaA="2" PontaB="14"/>
         <Pontos>
             <Ponto Left="1464" Top="1369"/>
-            <Ponto Left="1196" Top="1369"/>
-            <Ponto Left="1196" Top="1481"/>
-            <Ponto Left="927" Top="1481"/>
+            <Ponto Left="1229" Top="1369"/>
+            <Ponto Left="1229" Top="1481"/>
+            <Ponto Left="994" Top="1481"/>
         </Pontos>
         <LogicoCardinalidade ID="64">
             <Bounds Height="14" Left="1426" Top="1357" Width="34"/>
@@ -3961,7 +3961,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="65">
-            <Bounds Height="14" Left="937" Top="1469" Width="36"/>
+            <Bounds Height="14" Left="1004" Top="1469" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_22</Texto>
             <Observacao/>
@@ -4086,9 +4086,9 @@
         <Ligacoes PontaA="15" PontaB="16"/>
         <Pontos>
             <Ponto Left="734" Top="1012"/>
-            <Ponto Left="560" Top="1012"/>
-            <Ponto Left="560" Top="1497"/>
-            <Ponto Left="385" Top="1497"/>
+            <Ponto Left="591" Top="1012"/>
+            <Ponto Left="591" Top="1484"/>
+            <Ponto Left="448" Top="1484"/>
         </Pontos>
         <LogicoCardinalidade ID="73">
             <Bounds Height="14" Left="696" Top="1000" Width="34"/>
@@ -4105,7 +4105,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="74">
-            <Bounds Height="14" Left="395" Top="1485" Width="36"/>
+            <Bounds Height="14" Left="458" Top="1472" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_28</Texto>
             <Observacao/>
@@ -4134,9 +4134,9 @@
         <Ligacoes PontaA="14" PontaB="16"/>
         <Pontos>
             <Ponto Left="776" Top="1505"/>
-            <Ponto Left="581" Top="1505"/>
-            <Ponto Left="581" Top="1539"/>
-            <Ponto Left="385" Top="1539"/>
+            <Ponto Left="612" Top="1505"/>
+            <Ponto Left="612" Top="1526"/>
+            <Ponto Left="448" Top="1526"/>
         </Pontos>
         <LogicoCardinalidade ID="76">
             <Bounds Height="14" Left="738" Top="1493" Width="34"/>
@@ -4153,7 +4153,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="77">
-            <Bounds Height="14" Left="395" Top="1527" Width="36"/>
+            <Bounds Height="14" Left="458" Top="1514" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_30</Texto>
             <Observacao/>
@@ -4182,9 +4182,9 @@
         <Ligacoes PontaA="7" PontaB="16"/>
         <Pontos>
             <Ponto Left="1121" Top="1764"/>
-            <Ponto Left="753" Top="1764"/>
-            <Ponto Left="753" Top="1581"/>
-            <Ponto Left="385" Top="1581"/>
+            <Ponto Left="784" Top="1764"/>
+            <Ponto Left="784" Top="1568"/>
+            <Ponto Left="448" Top="1568"/>
         </Pontos>
         <LogicoCardinalidade ID="79">
             <Bounds Height="14" Left="1083" Top="1752" Width="34"/>
@@ -4201,7 +4201,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="80">
-            <Bounds Height="14" Left="395" Top="1569" Width="36"/>
+            <Bounds Height="14" Left="458" Top="1556" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_32</Texto>
             <Observacao/>
@@ -4422,9 +4422,9 @@
         <Ligacoes PontaA="17" PontaB="19"/>
         <Pontos>
             <Ponto Left="1472" Top="655"/>
-            <Ponto Left="1404" Top="655"/>
-            <Ponto Left="1404" Top="272"/>
-            <Ponto Left="1335" Top="272"/>
+            <Ponto Left="1426" Top="655"/>
+            <Ponto Left="1426" Top="272"/>
+            <Ponto Left="1381" Top="272"/>
         </Pontos>
         <LogicoCardinalidade ID="94">
             <Bounds Height="14" Left="1434" Top="643" Width="34"/>
@@ -4441,7 +4441,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="95">
-            <Bounds Height="14" Left="1345" Top="260" Width="36"/>
+            <Bounds Height="14" Left="1391" Top="260" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_42</Texto>
             <Observacao/>
@@ -4520,7 +4520,7 @@
             <Ponto Left="931" Top="611"/>
             <Ponto Left="931" Top="567"/>
             <Ponto Left="890" Top="567"/>
-            <Ponto Left="890" Top="524"/>
+            <Ponto Left="890" Top="523"/>
         </Pontos>
         <LogicoCardinalidade ID="107">
             <Bounds Height="14" Left="899" Top="593" Width="34"/>
@@ -4537,7 +4537,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="108">
-            <Bounds Height="14" Left="856" Top="534" Width="36"/>
+            <Bounds Height="14" Left="856" Top="533" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_50</Texto>
             <Observacao/>
@@ -4566,9 +4566,9 @@
         <Ligacoes PontaA="18" PontaB="8"/>
         <Pontos>
             <Ponto Left="1464" Top="1049"/>
-            <Ponto Left="1377" Top="1049"/>
-            <Ponto Left="1377" Top="1195"/>
-            <Ponto Left="1290" Top="1195"/>
+            <Ponto Left="1403" Top="1049"/>
+            <Ponto Left="1403" Top="1161"/>
+            <Ponto Left="1342" Top="1161"/>
         </Pontos>
         <LogicoCardinalidade ID="110">
             <Bounds Height="14" Left="1426" Top="1037" Width="34"/>
@@ -4585,7 +4585,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="111">
-            <Bounds Height="14" Left="1300" Top="1183" Width="36"/>
+            <Bounds Height="14" Left="1352" Top="1149" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_52</Texto>
             <Observacao/>
@@ -4614,8 +4614,8 @@
         <Ligacoes PontaA="22" PontaB="23"/>
         <Pontos>
             <Ponto Left="2020" Top="505"/>
-            <Ponto Left="2145" Top="505"/>
-            <Ponto Left="2145" Top="320"/>
+            <Ponto Left="2166" Top="505"/>
+            <Ponto Left="2166" Top="321"/>
         </Pontos>
         <LogicoCardinalidade ID="113">
             <Bounds Height="14" Left="2030" Top="493" Width="34"/>
@@ -4632,7 +4632,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="114">
-            <Bounds Height="14" Left="2111" Top="330" Width="36"/>
+            <Bounds Height="14" Left="2132" Top="331" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_54</Texto>
             <Observacao/>
@@ -4663,7 +4663,7 @@
             <Ponto Left="1948" Top="407"/>
             <Ponto Left="1948" Top="365"/>
             <Ponto Left="1948" Top="365"/>
-            <Ponto Left="1948" Top="322"/>
+            <Ponto Left="1948" Top="323"/>
         </Pontos>
         <LogicoCardinalidade ID="116">
             <Bounds Height="14" Left="1916" Top="389" Width="34"/>
@@ -4680,7 +4680,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="117">
-            <Bounds Height="14" Left="1914" Top="332" Width="36"/>
+            <Bounds Height="14" Left="1914" Top="333" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_56</Texto>
             <Observacao/>
@@ -4709,9 +4709,9 @@
         <Ligacoes PontaA="22" PontaB="25"/>
         <Pontos>
             <Ponto Left="1869" Top="479"/>
-            <Ponto Left="1821" Top="479"/>
-            <Ponto Left="1821" Top="320"/>
-            <Ponto Left="1773" Top="320"/>
+            <Ponto Left="1835" Top="479"/>
+            <Ponto Left="1835" Top="320"/>
+            <Ponto Left="1802" Top="320"/>
         </Pontos>
         <LogicoCardinalidade ID="119">
             <Bounds Height="14" Left="1831" Top="467" Width="34"/>
@@ -4728,7 +4728,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="120">
-            <Bounds Height="14" Left="1783" Top="308" Width="36"/>
+            <Bounds Height="14" Left="1812" Top="308" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_58</Texto>
             <Observacao/>
@@ -4756,13 +4756,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="10" PontaB="11"/>
         <Pontos>
-            <Ponto Left="393" Top="1278"/>
-            <Ponto Left="315" Top="1278"/>
-            <Ponto Left="315" Top="1320"/>
+            <Ponto Left="360" Top="1281"/>
+            <Ponto Left="299" Top="1281"/>
+            <Ponto Left="299" Top="1320"/>
             <Ponto Left="237" Top="1320"/>
         </Pontos>
         <LogicoCardinalidade ID="122">
-            <Bounds Height="14" Left="355" Top="1266" Width="34"/>
+            <Bounds Height="14" Left="322" Top="1269" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_59</Texto>
             <Observacao/>
@@ -4804,13 +4804,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="10" PontaB="12"/>
         <Pontos>
-            <Ponto Left="393" Top="1229"/>
-            <Ponto Left="316" Top="1229"/>
-            <Ponto Left="316" Top="1136"/>
-            <Ponto Left="239" Top="1136"/>
+            <Ponto Left="360" Top="1232"/>
+            <Ponto Left="322" Top="1232"/>
+            <Ponto Left="322" Top="1136"/>
+            <Ponto Left="284" Top="1136"/>
         </Pontos>
         <LogicoCardinalidade ID="125">
-            <Bounds Height="14" Left="355" Top="1217" Width="34"/>
+            <Bounds Height="14" Left="322" Top="1220" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_61</Texto>
             <Observacao/>
@@ -4824,7 +4824,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="126">
-            <Bounds Height="14" Left="249" Top="1124" Width="36"/>
+            <Bounds Height="14" Left="294" Top="1124" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_62</Texto>
             <Observacao/>
@@ -4948,13 +4948,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="31" PontaB="29"/>
         <Pontos>
-            <Ponto Left="2136" Top="899"/>
-            <Ponto Left="2085" Top="899"/>
-            <Ponto Left="2085" Top="912"/>
-            <Ponto Left="2033" Top="912"/>
+            <Ponto Left="2152" Top="898"/>
+            <Ponto Left="2111" Top="898"/>
+            <Ponto Left="2111" Top="912"/>
+            <Ponto Left="2071" Top="912"/>
         </Pontos>
         <LogicoCardinalidade ID="141">
-            <Bounds Height="14" Left="2098" Top="887" Width="34"/>
+            <Bounds Height="14" Left="2114" Top="886" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_71</Texto>
             <Observacao/>
@@ -4968,7 +4968,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="142">
-            <Bounds Height="14" Left="2043" Top="900" Width="36"/>
+            <Bounds Height="14" Left="2081" Top="900" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_72</Texto>
             <Observacao/>
@@ -4996,13 +4996,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="29" PontaB="30"/>
         <Pontos>
-            <Ponto Left="1961" Top="1028"/>
+            <Ponto Left="1961" Top="1029"/>
             <Ponto Left="1961" Top="1166"/>
             <Ponto Left="2105" Top="1166"/>
             <Ponto Left="2105" Top="1303"/>
         </Pontos>
         <LogicoCardinalidade ID="144">
-            <Bounds Height="14" Left="1929" Top="1038" Width="34"/>
+            <Bounds Height="14" Left="1929" Top="1039" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_73</Texto>
             <Observacao/>
@@ -5044,12 +5044,12 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="5" PontaB="30"/>
         <Pontos>
-            <Ponto Left="1582" Top="1744"/>
+            <Ponto Left="1623" Top="1744"/>
             <Ponto Left="2088" Top="1744"/>
-            <Ponto Left="2088" Top="1497"/>
+            <Ponto Left="2088" Top="1498"/>
         </Pontos>
         <LogicoCardinalidade ID="147">
-            <Bounds Height="14" Left="1592" Top="1732" Width="34"/>
+            <Bounds Height="14" Left="1633" Top="1732" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_75</Texto>
             <Observacao/>
@@ -5063,7 +5063,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="148">
-            <Bounds Height="14" Left="2054" Top="1507" Width="36"/>
+            <Bounds Height="14" Left="2054" Top="1508" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_76</Texto>
             <Observacao/>
@@ -5091,13 +5091,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="32" PontaB="6"/>
         <Pontos>
-            <Ponto Left="1582" Top="1969"/>
-            <Ponto Left="1661" Top="1969"/>
-            <Ponto Left="1661" Top="1970"/>
+            <Ponto Left="1598" Top="1970"/>
+            <Ponto Left="1668" Top="1970"/>
+            <Ponto Left="1668" Top="1970"/>
             <Ponto Left="1739" Top="1970"/>
         </Pontos>
         <LogicoCardinalidade ID="158">
-            <Bounds Height="14" Left="1592" Top="1957" Width="36"/>
+            <Bounds Height="14" Left="1608" Top="1958" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_81</Texto>
             <Observacao/>
@@ -5139,13 +5139,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="32" PontaB="5"/>
         <Pontos>
-            <Ponto Left="1510" Top="1902"/>
-            <Ponto Left="1510" Top="1848"/>
-            <Ponto Left="1510" Top="1848"/>
-            <Ponto Left="1510" Top="1794"/>
+            <Ponto Left="1449" Top="1903"/>
+            <Ponto Left="1449" Top="1849"/>
+            <Ponto Left="1510" Top="1849"/>
+            <Ponto Left="1510" Top="1795"/>
         </Pontos>
         <LogicoCardinalidade ID="161">
-            <Bounds Height="14" Left="1476" Top="1884" Width="36"/>
+            <Bounds Height="14" Left="1415" Top="1885" Width="36"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_83</Texto>
             <Observacao/>
@@ -5159,7 +5159,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="162">
-            <Bounds Height="14" Left="1478" Top="1804" Width="34"/>
+            <Bounds Height="14" Left="1478" Top="1805" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_84</Texto>
             <Observacao/>
@@ -5187,13 +5187,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="21" PontaB="17"/>
         <Pontos>
-            <Ponto Left="963" Top="437"/>
+            <Ponto Left="962" Top="437"/>
             <Ponto Left="1217" Top="437"/>
             <Ponto Left="1217" Top="691"/>
             <Ponto Left="1472" Top="691"/>
         </Pontos>
         <LogicoCardinalidade ID="163">
-            <Bounds Height="14" Left="973" Top="425" Width="34"/>
+            <Bounds Height="14" Left="972" Top="425" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_45</Texto>
             <Observacao/>
@@ -5254,7 +5254,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="169">
-            <Bounds Height="14" Left="812" Top="663" Width="34"/>
+            <Bounds Height="14" Left="814" Top="663" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_48</Texto>
             <Observacao/>
@@ -5282,13 +5282,13 @@
         <Largura Valor="1"/>
         <Ligacoes PontaA="18" PontaB="30"/>
         <Pontos>
-            <Ponto Left="1615" Top="1061"/>
-            <Ponto Left="1832" Top="1061"/>
-            <Ponto Left="1832" Top="1365"/>
+            <Ponto Left="1672" Top="1061"/>
+            <Ponto Left="1860" Top="1061"/>
+            <Ponto Left="1860" Top="1365"/>
             <Ponto Left="2048" Top="1365"/>
         </Pontos>
         <LogicoCardinalidade ID="176">
-            <Bounds Height="14" Left="1625" Top="1049" Width="34"/>
+            <Bounds Height="14" Left="1682" Top="1049" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_63</Texto>
             <Observacao/>
@@ -5302,7 +5302,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="177">
-            <Bounds Height="14" Left="2008" Top="1353" Width="34"/>
+            <Bounds Height="14" Left="2010" Top="1353" Width="34"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_64</Texto>
             <Observacao/>
