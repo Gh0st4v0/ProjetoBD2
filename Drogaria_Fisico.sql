@@ -1,4 +1,4 @@
--- Modelo fisico inicial - Drogaria
+-- Modelo fisico - Drogaria
 -- MySQL 8.0.16+ / InnoDB / utf8mb4
 -- Este arquivo define a estrutura; nao executa CREATE DATABASE nem conecta a servidor.
 
@@ -17,7 +17,7 @@ CREATE TABLE `Categoria` (
 CREATE TABLE `Fabricante` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ativo` BOOLEAN NOT NULL DEFAULT TRUE,
-  `nome_fantasia` VARCHAR(120) NOT NULL,
+  `nome_fantasia` VARCHAR(120) NULL,
   `cnpj` CHAR(14) NOT NULL,
   `razao_social` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id`),
@@ -45,8 +45,7 @@ CREATE TABLE `Perfil_Acesso` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `descricao` TEXT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `uq_Perfil_Acesso_nome` UNIQUE (`nome`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Cliente` (
@@ -75,7 +74,7 @@ CREATE TABLE `Produto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ativo` BOOLEAN NOT NULL DEFAULT TRUE,
   `unidade_medida` VARCHAR(20) NOT NULL,
-  `estoque_minimo` DECIMAL(10,3) NOT NULL DEFAULT 0.000,
+  `estoque_minimo` DECIMAL(10,3) NULL,
   `descricao` TEXT NULL,
   `nome` VARCHAR(120) NOT NULL,
   `preco_venda` DECIMAL(12,2) NOT NULL,
@@ -84,7 +83,7 @@ CREATE TABLE `Produto` (
   `fk_Fabricante_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `uq_Produto_codigo_barras` UNIQUE (`codigo_barras`),
-  CONSTRAINT `ck_Produto_estoque_minimo` CHECK (`estoque_minimo` >= 0),
+  CONSTRAINT `ck_Produto_estoque_minimo` CHECK (`estoque_minimo` IS NULL OR `estoque_minimo` >= 0),
   CONSTRAINT `ck_Produto_preco_venda` CHECK (`preco_venda` >= 0),
   CONSTRAINT `fk_Produto_Categoria` FOREIGN KEY (`fk_Categoria_id`) REFERENCES `Categoria` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_Produto_Fabricante` FOREIGN KEY (`fk_Fabricante_id`) REFERENCES `Fabricante` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -102,11 +101,11 @@ CREATE TABLE `Lote` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `data_fabricacao` DATE NULL,
   `numero_lote` VARCHAR(50) NOT NULL,
-  `data_validade` DATE NOT NULL,
+  `data_validade` DATE NULL,
   `fk_Produto_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `uq_Lote_Produto_numero` UNIQUE (`fk_Produto_id`, `numero_lote`),
-  CONSTRAINT `ck_Lote_datas` CHECK (`data_fabricacao` IS NULL OR `data_validade` >= `data_fabricacao`),
+  CONSTRAINT `ck_Lote_datas` CHECK (`data_fabricacao` IS NULL OR `data_validade` IS NULL OR `data_validade` >= `data_fabricacao`),
   CONSTRAINT `fk_Lote_Produto` FOREIGN KEY (`fk_Produto_id`) REFERENCES `Produto` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
@@ -128,7 +127,7 @@ CREATE TABLE `Compra` (
   `fk_Fornecedor_id` INT NOT NULL,
   `fk_Funcionario_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `ck_Compra_status` CHECK (`status` IN ('PENDENTE','PARCIALMENTE_RECEBIDA','CONCLUIDA','CANCELADA')),
+  CONSTRAINT `ck_Compra_status` CHECK (`status` IN ('PENDENTE','PARCIALMENTE_RECEBIDA','CONCLUIDA')),
   CONSTRAINT `fk_Compra_Fornecedor` FOREIGN KEY (`fk_Fornecedor_id`) REFERENCES `Fornecedor` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_Compra_Funcionario` FOREIGN KEY (`fk_Funcionario_id`) REFERENCES `Funcionario` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
@@ -140,7 +139,7 @@ CREATE TABLE `Item_Compra` (
   `fk_Compra_id` INT NOT NULL,
   `fk_Produto_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `ck_Item_Compra_preco` CHECK (`preco_unitario` >= 0),
+  CONSTRAINT `ck_Item_Compra_preco` CHECK (`preco_unitario` > 0),
   CONSTRAINT `ck_Item_Compra_quantidade` CHECK (`quantidade_solicitada` > 0),
   CONSTRAINT `fk_Item_Compra_Compra` FOREIGN KEY (`fk_Compra_id`) REFERENCES `Compra` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_Item_Compra_Produto` FOREIGN KEY (`fk_Produto_id`) REFERENCES `Produto` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -197,7 +196,7 @@ CREATE TABLE `Receita` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `data_emissao` DATE NOT NULL,
   `observacao` TEXT NULL,
-  `url_documento` VARCHAR(2048) NULL,
+  `url_documento` VARCHAR(2048) NOT NULL,
   `tipo_documento` VARCHAR(30) NOT NULL,
   `data_validade` DATE NULL,
   `fk_Venda_id` INT NOT NULL,
@@ -243,7 +242,7 @@ CREATE TABLE `Item_Venda` (
 
 CREATE TABLE `Pagamento` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(30) NOT NULL DEFAULT 'CONFIRMADO',
+  `status` VARCHAR(30) NOT NULL,
   `forma_pagamento` VARCHAR(30) NOT NULL,
   `valor` DECIMAL(12,2) NOT NULL,
   `data_hora` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
