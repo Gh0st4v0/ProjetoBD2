@@ -1,80 +1,124 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 
-% Codificacao e idioma
+% Idioma, codificacao e tipografia
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
-\usepackage{lmodern}
+\usepackage{newtxtext,newtxmath}
 \usepackage{microtype}
 
-% Pagina e elementos graficos
-\usepackage[a4paper,margin=2.5cm,headheight=15pt]{geometry}
-\usepackage{xcolor}
+% Formato da pagina segundo a apresentacao academica ABNT
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm,headheight=15pt,headsep=0.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 \usepackage{bookmark}
-\usepackage{tcolorbox}
 \usepackage{lastpage}
-
-\definecolor{navy}{HTML}{17324D}
-\definecolor{teal}{HTML}{168C8C}
-\definecolor{ink}{HTML}{263442}
-\definecolor{muted}{HTML}{657586}
-\definecolor{pale}{HTML}{EAF4F4}
-\definecolor{palegray}{HTML}{F3F6F8}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
 
 \hypersetup{
-  colorlinks=true,
-  linkcolor=navy,
-  urlcolor=teal,
-  pdftitle={Sistema de Gestao de Drogaria — Fase 1},
-  pdfsubject={Levantamento e especificacao de requisitos},
-  pdfauthor={Projeto de Banco de Dados}
+  pdftitle={Sistema de Gestao de Drogaria},
+  pdfsubject={Projeto de Banco de Dados},
+  pdfauthor={Gustavo Gouvea Andrade; Roberto Dias Junior}
 }
 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{5pt}
-\setlist[itemize]{leftmargin=1.35em,itemsep=2pt,topsep=3pt}
-\setlist[enumerate]{leftmargin=1.7em,itemsep=3pt,topsep=4pt}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{3em}
+\onehalfspacing
+\justifying
+\setlist[itemize]{leftmargin=1.25cm,itemsep=0pt,topsep=4pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.5cm,itemsep=2pt,topsep=4pt,parsep=0pt}
+\setlist[description]{style=nextline,leftmargin=1.2cm,labelsep=0.25cm,itemsep=5pt,topsep=4pt,parsep=0pt}
 
-\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection.}{0.55em}{}
-\titleformat{\subsection}{\large\bfseries\color{teal}}{}{0pt}{}
-\titlespacing*{\section}{0pt}{20pt}{7pt}
+\titleformat{\section}
+  {\normalfont\bfseries\normalsize}
+  {\thesection}
+  {1em}
+  {\MakeUppercase}
+\titleformat{\subsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsection}
+  {1em}
+  {}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsubsection}
+  {1em}
+  {}
+\titlespacing*{\section}{0pt}{18pt}{6pt}
 \titlespacing*{\subsection}{0pt}{12pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{3pt}
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{muted}Projeto de Banco de Dados}
-\fancyhead[R]{\small\color{muted}Sistema de Gestao de Drogaria}
-\fancyfoot[L]{\small\color{muted}Fase 1 — Requisitos}
-\fancyfoot[R]{\small\color{muted}\thepage\ de \pageref{LastPage}}
-\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
-\newcommand{\req}[2]{\item[\textbf{#1}] #2}
-\newcommand{\ruleitem}[2]{\item[\textbf{#1}] #2}
-
+\renewcommand{\contentsname}{SUMARIO}
+\newcommand{\req}[2]{\textbf{#1} & #2\\\hline}
+\newcommand{\ruleitem}[2]{\textbf{#1} & #2\\\hline}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newenvironment{reqtable}[1]{%
+  \begingroup
+  \small
+  \singlespacing
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{longtable}{@{}|>{\bfseries\RaggedRight\arraybackslash}p{1.5cm}|L{\dimexpr\textwidth-1.5cm-2\tabcolsep-3\arrayrulewidth\relax}|@{}}
+  \caption{#1}\\
+  \hline
+  \textbf{Codigo} & \textbf{Descricao}\\
+  \hline
+  \endfirsthead
+  \caption[]{#1 (continuacao)}\\
+  \hline
+  \textbf{Codigo} & \textbf{Descricao}\\
+  \hline
+  \endhead
+  \hline
+  \multicolumn{2}{|r|}{Continua na proxima pagina.}\\
+  \endfoot
+  \hline
+  \endlastfoot
+}{%
+  \end{longtable}
+  \endgroup
+}
+\newcommand{\dictgroup}[1]{\multicolumn{4}{|l|}{\bfseries #1}\\\hline}
+\newcommand{\dictrow}[4]{\url{#1} & \url{#2} & #3 & #4\\\hline}
 \begin{document}
 
 \begin{titlepage}
 \thispagestyle{empty}
-\vspace*{2.2cm}
-{\color{teal}\large PROJETO DE BANCO DE DADOS\par}
-\vspace{1.2cm}
-{\Huge\bfseries\color{navy}Sistema de Gestao de Drogaria\par}
-\vspace{0.45cm}
-{\Large\color{ink}Fase 1: Levantamento e especificacao de requisitos\par}
-\vspace{1.2cm}
-\begin{tcolorbox}[colback=pale,colframe=pale,boxrule=0pt,left=12pt,right=12pt,top=10pt,bottom=10pt]
-\textbf{Disciplina}\\
-SPOBDD2 — Elaborar em fases o Plano do Projeto de BD
-\end{tcolorbox}
-\vfill
-{\large\color{ink}Outubro de 2026\par}
-\vspace{1.5cm}
-{\small\color{muted}Documento de requisitos do projeto\par}
+\begin{center}
+{\normalsize INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SÃO PAULO\par}
+{\normalsize CAMPUS SÃO PAULO\par}
+\vspace{2.5cm}
+
+{\normalsize Gustavo Gouvea Andrade\\Prontuario: SP3076725\par}
+\vspace{0.4cm}
+{\normalsize Roberto Dias Junior\\Prontuario: SP3236471\par}
+
+\vspace*{\fill}
+{\bfseries\MakeUppercase{Sistema de Gestão de Drogaria}\par}
+\vspace{0.6cm}
+{\normalsize Projeto de Banco de Dados\par}
+\vspace*{\fill}
+
+
+
+\vspace*{\fill}
+{\normalsize São Paulo -- SP\par}
+{\normalsize 2026\par}
+\end{center}
 \end{titlepage}
 
 \tableofcontents
@@ -123,69 +167,69 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 
 \section{Requisitos funcionais}
 \subsection{Produtos e estoque}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Produtos e estoque}
 \req{RF01}{O sistema deve permitir cadastrar, consultar, atualizar e inativar produtos comercializados pela drogaria, incluindo medicamentos e produtos nao medicamentosos.}
 \req{RF02}{O sistema deve permitir classificar produtos por categoria e registrar informacoes de fabricante quando aplicavel.}
 \req{RF03}{O sistema deve controlar o estoque dos produtos e, quando aplicavel, registrar lotes, quantidades e datas de validade.}
 \req{RF04}{O sistema deve permitir consultar a quantidade disponivel por produto e, quando houver controle por lote, por lote.}
 \req{RF05}{O sistema deve identificar lotes vencidos e lotes proximos do vencimento, para apoiar o controle do estoque.}
 \req{RF06}{O sistema deve registrar movimentacoes de estoque decorrentes de recebimentos, vendas, cancelamentos e outros ajustes autorizados, mantendo historico da operacao.}
-\end{description}
+\end{reqtable}
 
 \subsection{Fornecedores e compras}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Fornecedores e compras}
 \req{RF07}{O sistema deve permitir cadastrar, consultar, atualizar e inativar fornecedores, armazenando seus dados cadastrais basicos, incluindo razao social, CNPJ e endereco.}
 \req{RF08}{O sistema deve permitir registrar varios telefones e e-mails para um mesmo fornecedor, mantendo cada contato associado ao fornecedor correspondente.}
 \req{RF09}{O sistema deve permitir registrar pedidos de compra associados a um fornecedor, incluindo data, itens solicitados, quantidades e precos unitarios negociados.}
 \req{RF10}{O sistema deve permitir registrar o recebimento de mercadorias separadamente do pedido de compra, incluindo data, quantidades efetivamente recebidas e, quando aplicavel, lote e validade.}
 \req{RF11}{O sistema deve permitir recebimentos parciais de um pedido e acompanhar se o pedido esta pendente, parcialmente recebido ou concluido.}
-\end{description}
+\end{reqtable}
 
 \subsection{Clientes, funcionarios e acesso}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Clientes, funcionarios e acesso}
 \req{RF12}{O sistema deve permitir cadastrar, consultar, atualizar e inativar clientes, preservando o historico de vendas.}
 \req{RF13}{O sistema deve permitir cadastrar funcionarios e associar cada usuario a um perfil de acesso.}
 \req{RF14}{O sistema deve oferecer perfis iniciais de atendente, gerente e administrador, com permissoes distintas para as funcionalidades.}
 \req{RF15}{O sistema deve permitir que usuarios autorizados consultem dados cadastrais e operacionais conforme suas permissoes, restringindo especialmente o acesso a receitas e dados associados.}
-\end{description}
+\end{reqtable}
 
 \subsection{Vendas e cancelamentos}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Vendas e cancelamentos}
 \req{RF16}{O sistema deve permitir registrar vendas com data e hora, funcionario responsavel, cliente quando aplicavel, itens, quantidades e valores.}
 \req{RF17}{O sistema deve permitir aplicar desconto percentual individualmente a cada item da venda e calcular os valores dos itens e o total da venda.}
 \req{RF18}{O sistema deve verificar a disponibilidade de estoque antes de confirmar uma venda e impedir a dispensacao de lotes vencidos.}
 \req{RF19}{Quando houver controle por lote, o sistema deve registrar quais lotes foram utilizados para atender cada item vendido.}
 \req{RF20}{O sistema deve permitir cancelar vendas somente a gerente ou a funcionario com permissao especifica, exigindo motivo e registrando data, hora e responsavel.}
 \req{RF21}{Ao cancelar uma venda, o sistema deve reverter de forma consistente os efeitos no estoque e preservar o registro original da venda.}
-\end{description}
+\end{reqtable}
 
 \subsection{Pagamentos e estornos}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Pagamentos e estornos}
 \req{RF22}{O sistema deve permitir registrar um ou mais pagamentos associados a mesma venda, com valor, data e forma de pagamento.}
 \req{RF23}{O sistema deve contemplar Pix, dinheiro, cartao de debito e cartao de credito, permitindo combinar modalidades na mesma venda.}
 \req{RF24}{O sistema deve permitir pagamentos parciais, calcular o saldo pendente e indicar se a venda esta pendente, parcialmente paga ou quitada.}
 \req{RF25}{O sistema deve permitir registrar estornos associados aos pagamentos originais, preservando o historico e registrando valor, data e motivo.}
-\end{description}
+\end{reqtable}
 
 \subsection{Receitas}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Receitas}
 \req{RF26}{O sistema deve permitir registrar dados essenciais de receitas digitais ou digitalizadas, incluindo datas pertinentes, nome e registro profissional do prescritor e referencia/URL para o documento.}
 \req{RF27}{O sistema deve permitir associar cada receita a uma unica venda no escopo deste projeto.}
 \req{RF28}{O sistema deve registrar, quando aplicavel, os medicamentos e as quantidades prescritas e dispensadas associados a receita e a venda correspondente.}
 \req{RF29}{O sistema deve restringir o acesso as receitas e aos documentos referenciados a usuarios autorizados.}
-\end{description}
+\end{reqtable}
 
 \subsection{Consultas e relatorios operacionais}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos funcionais: Consultas e relatorios operacionais}
 \req{RF30}{O sistema deve permitir consultar vendas por periodo e funcionario, incluindo quantidade de vendas e total vendido, desconsiderando vendas canceladas nos totais operacionais.}
 \req{RF31}{O sistema deve permitir consultar produtos com estoque abaixo de um limite minimo definido para o produto, caso esse limite seja cadastrado.}
 \req{RF32}{O sistema deve permitir consultar lotes vencidos e proximos do vencimento.}
 \req{RF33}{O sistema deve permitir consultar compras por fornecedor.}
 \req{RF34}{O sistema deve permitir consultar vendas com pagamentos pendentes ou saldo em aberto.}
-\end{description}
+\end{reqtable}
 
 \section{Requisitos nao funcionais}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Requisitos nao funcionais}
 \req{RNF01}{\textbf{Integridade dos dados:} o banco deve preservar relacionamentos consistentes e impedir referencias invalidas entre registros.}
 \req{RNF02}{\textbf{Seguranca:} o acesso as funcionalidades deve respeitar a autenticacao e as permissoes atribuidas a cada perfil.}
 \req{RNF03}{\textbf{Privacidade:} dados pessoais e informacoes de receitas devem ter acesso restrito e ser tratados conforme os principios e obrigacoes aplicaveis da LGPD.}
@@ -193,10 +237,10 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \req{RNF05}{\textbf{Rastreabilidade:} o sistema deve manter historico das movimentacoes de estoque, vendas, cancelamentos, pagamentos e estornos relevantes.}
 \req{RNF06}{\textbf{Backup e recuperacao:} deve existir procedimento para copia de seguranca e recuperacao dos dados em caso de falha.}
 \req{RNF07}{\textbf{Manutenibilidade:} a organizacao dos dados deve permitir evolucao futura do sistema sem exigir reconstrucao integral do banco.}
-\end{description}
+\end{reqtable}
 
 \section{Regras de negocio}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Regras de negocio}
 \ruleitem{RB01}{Todo pedido de compra deve estar associado a um fornecedor e conter pelo menos um item.}
 \ruleitem{RB02}{As quantidades solicitadas e os precos unitarios de itens de compra devem ser maiores que zero.}
 \ruleitem{RB03}{Registrar um pedido de compra nao aumenta o estoque; somente as quantidades efetivamente recebidas podem aumentar o estoque.}
@@ -223,10 +267,10 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \ruleitem{RB24}{A validade e os requisitos aplicaveis a receita e ao medicamento devem ser respeitados; uma imagem digitalizada, por si so, nao garante validade legal.}
 \ruleitem{RB25}{Produtos inativados nao devem ser usados em novas vendas, mas seus registros historicos devem permanecer disponiveis para consulta autorizada.}
 \ruleitem{RB26}{O acesso as funcionalidades deve obedecer ao perfil e as permissoes do usuario; dados de receitas devem ter protecao adicional conforme a necessidade de acesso.}
-\end{description}
+\end{reqtable}
 
 \subsection{Regras complementares consolidadas para orientar o DER conceitual}
-\begin{description}[style=nextline,leftmargin=1.2cm,labelsep=0.25cm]
+\begin{reqtable}{Regras complementares consolidadas para orientar o DER conceitual}
 \ruleitem{RB27}{Cada produto deve estar associado a exatamente uma categoria principal, sem hierarquia de subcategorias, e a um fabricante. O fabricante nao se confunde com o fornecedor.}
 \ruleitem{RB28}{Um medicamento e um tipo especializado de produto. Um medicamento pode possuir um ou varios principios ativos; a associacao sera representada por uma entidade associativa entre Medicamento e Principio Ativo.}
 \ruleitem{RB29}{O codigo interno do produto e obrigatorio e unico. O codigo de barras e opcional e, quando informado, deve ser unico.}
@@ -244,7 +288,7 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \ruleitem{RB41}{Cada funcionario pode ter zero ou uma conta de usuario; cada usuario pertence a exatamente um funcionario e possui um perfil de acesso principal.}
 \ruleitem{RB42}{Uma venda pode estar associada a zero ou varias receitas; cada receita pertence a exatamente uma venda e possui um prescritor. Os itens de receita so podem referenciar produtos cadastrados como medicamentos.}
 \ruleitem{RB43}{Um ajuste de estoque pode gerar varias movimentacoes, uma por lote afetado. Cada movimentacao deve manter uma origem compativel com sua finalidade operacional, permitindo rastreabilidade entre recebimento, venda, cancelamento ou ajuste.}
-\end{description}
+\end{reqtable}
 
 \section{Premissas e observacoes}
 \begin{itemize}
@@ -252,9 +296,267 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \item A URL ou referencia da receita aponta para documento armazenado fora do banco; o armazenamento externo devera oferecer controle de acesso apropriado.
 \item As regras de validade, assinatura e dispensacao de receitas variam conforme o tipo de documento e medicamento. O sistema devera respeitar os requisitos aplicaveis, sem pretender substituir uma analise regulatoria completa.
 \item Os relatorios operacionais serao implementados como consultas SQL e, se util, views. Nao sera criada uma entidade de negocio chamada Relatorio.
-\item Esta fase define requisitos; DER, modelo logico, normalizacao, script SQL, criacao de tabelas e testes serao desenvolvidos nas fases seguintes.
+\item Esta secao consolida os requisitos que orientaram as etapas seguintes. O dicionario registra os atributos e tipos do modelo logico; o modelo fisico, o script SQL e a validacao do banco serao tratados nas proximas etapas.
 \end{itemize}
 
+\section{Dicionario de dados}
+O dicionario de dados descreve os atributos do modelo logico, seus tipos previstos para MySQL, suas finalidades e as chaves registradas no modelo. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). A obrigatoriedade de preenchimento, valores padrao e regras de dominio serao detalhados junto com as restricoes do modelo fisico.
+
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}|L{2.7cm}|L{2.2cm}|L{8.4cm}|L{1.8cm}|@{}}
+\caption{Dicionario de dados do sistema}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo MySQL} & \textbf{Descricao} & \textbf{Chaves}\\
+\hline
+\endfirsthead
+\caption[]{Dicionario de dados do sistema (continuacao)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo MySQL} & \textbf{Descricao} & \textbf{Chaves}\\
+\hline
+\endhead
+\hline
+\multicolumn{4}{|r|}{Continua na proxima pagina.}\\
+\endfoot
+\hline
+\endlastfoot
+
+\dictgroup{Produto}
+\dictrow{id}{INT}{Identificador do produto.}{PK}
+\dictrow{ativo}{BOOLEAN}{Indica se o produto esta ativo para novas operacoes.}{--}
+\dictrow{unidade_medida}{VARCHAR(20)}{Unidade usada para expressar a quantidade do produto.}{--}
+\dictrow{estoque_minimo}{DECIMAL(10,3)}{Quantidade minima definida para apoiar o acompanhamento do estoque.}{--}
+\dictrow{descricao}{TEXT}{Descricao complementar do produto.}{--}
+\dictrow{nome}{VARCHAR(120)}{Nome de cadastro do produto.}{--}
+\dictrow{preco_venda}{DECIMAL(12,2)}{Preco atual de venda cadastrado para o produto.}{--}
+\dictrow{codigo_barras}{VARCHAR(20)}{Codigo de barras do produto, quando informado.}{--}
+\dictrow{fk_Categoria_id}{INT}{Categoria principal associada ao produto.}{FK}
+\dictrow{fk_Fabricante_id}{INT}{Fabricante associado ao produto.}{FK}
+
+\dictgroup{Categoria}
+\dictrow{id}{INT}{Identificador da categoria.}{PK}
+\dictrow{descricao}{TEXT}{Descricao da categoria.}{--}
+\dictrow{nome}{VARCHAR(80)}{Nome da categoria.}{--}
+
+\dictgroup{Fabricante}
+\dictrow{id}{INT}{Identificador do fabricante.}{PK}
+\dictrow{ativo}{BOOLEAN}{Indica se o fabricante esta ativo para novos cadastros ou operacoes.}{--}
+\dictrow{nome_fantasia}{VARCHAR(120)}{Nome fantasia do fabricante.}{--}
+\dictrow{cnpj}{CHAR(14)}{CNPJ do fabricante, armazenado sem mascara.}{--}
+\dictrow{razao_social}{VARCHAR(150)}{Razao social do fabricante.}{--}
+
+\dictgroup{Medicamento}
+\dictrow{id}{INT}{Identificador do medicamento, compartilhado com o produto correspondente.}{PK/FK}
+\dictrow{exige_receita}{BOOLEAN}{Indica se a venda do medicamento exige receita conforme o cadastro.}{--}
+\dictrow{registro_anvisa}{VARCHAR(20)}{Numero ou codigo de registro do medicamento na Anvisa, quando aplicavel.}{--}
+
+\dictgroup{Principio\_Ativo}
+\dictrow{id}{INT}{Identificador do principio ativo.}{PK}
+\dictrow{nome}{VARCHAR(120)}{Nome do principio ativo.}{--}
+\dictrow{descricao}{TEXT}{Descricao complementar do principio ativo.}{--}
+
+\dictgroup{Lote}
+\dictrow{id}{INT}{Identificador do lote.}{PK}
+\dictrow{custo_unitario}{DECIMAL(12,2)}{Custo unitario de aquisicao registrado para o lote.}{--}
+\dictrow{data_fabricacao}{DATE}{Data de fabricacao do lote, quando informada.}{--}
+\dictrow{numero_lote}{VARCHAR(50)}{Numero de identificacao do lote informado pelo fabricante.}{--}
+\dictrow{data_validade}{DATE}{Data de validade do lote, quando aplicavel.}{--}
+\dictrow{fk_Produto_id}{INT}{Produto ao qual o lote pertence.}{FK}
+
+\dictgroup{Movimentacao\_Estoque}
+\dictrow{id}{INT}{Identificador da movimentacao de estoque.}{PK}
+\dictrow{motivo}{VARCHAR(150)}{Motivo textual da movimentacao, quando informado.}{--}
+\dictrow{tipo_movimentacao}{VARCHAR(30)}{Classificacao da movimentacao, como entrada, saida ou ajuste.}{--}
+\dictrow{observacao}{TEXT}{Observacoes adicionais sobre a movimentacao.}{--}
+\dictrow{data_hora}{DATETIME}{Data e hora em que a movimentacao foi registrada.}{--}
+\dictrow{quantidade}{DECIMAL(10,3)}{Quantidade movimentada no lote.}{--}
+\dictrow{fk_Lote_id}{INT}{Lote de estoque afetado pela movimentacao.}{FK}
+\dictrow{fk_Ajuste_Estoque_id}{INT}{Ajuste de estoque relacionado, quando a movimentacao decorrer de ajuste.}{FK}
+\dictrow{fk_Item_Venda_id}{INT}{Item de venda relacionado, quando a movimentacao decorrer de venda.}{FK}
+
+\dictgroup{Ajuste\_Estoque}
+\dictrow{id}{INT}{Identificador do ajuste de estoque.}{PK}
+\dictrow{data_hora}{DATETIME}{Data e hora em que o ajuste foi registrado.}{--}
+\dictrow{observacao}{TEXT}{Observacoes complementares sobre o ajuste.}{--}
+\dictrow{motivo}{VARCHAR(150)}{Motivo do ajuste de estoque.}{--}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo ajuste.}{FK}
+
+\dictgroup{Fornecedor}
+\dictrow{id}{INT}{Identificador do fornecedor.}{PK}
+\dictrow{cnpj}{CHAR(14)}{CNPJ do fornecedor, armazenado sem mascara.}{--}
+\dictrow{razao_social}{VARCHAR(150)}{Razao social do fornecedor.}{--}
+\dictrow{nome_fantasia}{VARCHAR(120)}{Nome fantasia do fornecedor.}{--}
+\dictrow{ativo}{BOOLEAN}{Indica se o fornecedor esta ativo para novas operacoes.}{--}
+
+\dictgroup{Telefone\_Fornecedor}
+\dictrow{numero}{VARCHAR(20)}{Numero de telefone do fornecedor.}{--}
+\dictrow{id}{INT}{Identificador do registro de telefone.}{PK}
+\dictrow{tipo}{VARCHAR(30)}{Tipo ou finalidade do telefone, quando informado.}{--}
+\dictrow{fk_Fornecedor_id}{INT}{Fornecedor ao qual o telefone pertence.}{FK}
+
+\dictgroup{Email\_Fornecedor}
+\dictrow{id}{INT}{Identificador do registro de e-mail.}{PK}
+\dictrow{endereco_email}{VARCHAR(254)}{Endereco de e-mail do fornecedor.}{--}
+\dictrow{tipo}{VARCHAR(30)}{Tipo ou finalidade do e-mail, quando informado.}{--}
+\dictrow{fk_Fornecedor_id}{INT}{Fornecedor ao qual o e-mail pertence.}{FK}
+
+\dictgroup{Compra}
+\dictrow{id}{INT}{Identificador do pedido de compra.}{PK}
+\dictrow{data_pedido}{DATETIME}{Data e hora de registro do pedido.}{--}
+\dictrow{observacao}{TEXT}{Observacoes sobre o pedido de compra.}{--}
+\dictrow{status}{VARCHAR(30)}{Situacao operacional do pedido de compra.}{--}
+\dictrow{fk_Fornecedor_id}{INT}{Fornecedor ao qual o pedido foi feito.}{FK}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo pedido.}{FK}
+
+\dictgroup{Item\_Compra}
+\dictrow{id}{INT}{Identificador do item do pedido de compra.}{PK}
+\dictrow{preco_unitario}{DECIMAL(12,2)}{Preco unitario negociado para o item no pedido.}{--}
+\dictrow{quantidade_solicitada}{DECIMAL(10,3)}{Quantidade solicitada do produto.}{--}
+\dictrow{fk_Compra_id}{INT}{Pedido de compra ao qual o item pertence.}{FK}
+\dictrow{fk_Produto_id}{INT}{Produto solicitado no item de compra.}{FK}
+
+\dictgroup{Recebimento}
+\dictrow{id}{INT}{Identificador do recebimento.}{PK}
+\dictrow{data_recebimento}{DATETIME}{Data e hora em que o recebimento foi registrado.}{--}
+\dictrow{observacao}{TEXT}{Observacoes complementares sobre o recebimento.}{--}
+\dictrow{fk_Compra_id}{INT}{Pedido de compra relacionado ao recebimento.}{FK}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo registro do recebimento.}{FK}
+
+\dictgroup{Item\_Recebimento}
+\dictrow{id}{INT}{Identificador do item recebido.}{PK}
+\dictrow{quantidade_recebida}{DECIMAL(10,3)}{Quantidade efetivamente recebida do item.}{--}
+\dictrow{custo_unitario_real}{DECIMAL(12,2)}{Custo unitario efetivamente registrado no recebimento.}{--}
+\dictrow{fk_Recebimento_id}{INT}{Recebimento ao qual o item pertence.}{FK}
+\dictrow{fk_Item_Compra_id}{INT}{Item do pedido de compra atendido pelo recebimento.}{FK}
+\dictrow{fk_Lote_id}{INT}{Lote associado aos produtos recebidos, quando aplicavel.}{FK}
+
+\dictgroup{Venda}
+\dictrow{id}{INT}{Identificador da venda.}{PK}
+\dictrow{data_hora}{DATETIME}{Data e hora em que a venda foi registrada.}{--}
+\dictrow{observacao}{TEXT}{Observacoes complementares sobre a venda.}{--}
+\dictrow{status}{VARCHAR(30)}{Situacao operacional da venda.}{--}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pela venda.}{FK}
+\dictrow{fk_Cliente_id}{INT}{Cliente associado a venda, quando informado.}{FK}
+
+\dictgroup{Item\_Venda}
+\dictrow{id}{INT}{Identificador do item de venda.}{PK}
+\dictrow{preco_unitario}{DECIMAL(12,2)}{Preco unitario praticado no momento da venda.}{--}
+\dictrow{percentual_desconto}{DECIMAL(5,2)}{Percentual de desconto aplicado ao item.}{--}
+\dictrow{quantidade}{DECIMAL(10,3)}{Quantidade vendida do produto.}{--}
+\dictrow{valor_total}{DECIMAL(12,2)}{Valor final do item apos a aplicacao do desconto.}{--}
+\dictrow{fk_Venda_id}{INT}{Venda a que o item pertence.}{FK}
+\dictrow{fk_Produto_id}{INT}{Produto vendido.}{FK}
+\dictrow{fk_Item_Receita_id}{INT}{Item de receita associado a venda, quando houver.}{FK/UNIQUE}
+
+\dictgroup{Pagamento}
+\dictrow{id}{INT}{Identificador do pagamento.}{PK}
+\dictrow{status}{VARCHAR(30)}{Situacao do pagamento.}{--}
+\dictrow{forma_pagamento}{VARCHAR(30)}{Modalidade utilizada no pagamento.}{--}
+\dictrow{valor}{DECIMAL(12,2)}{Valor registrado para o pagamento.}{--}
+\dictrow{data_hora}{DATETIME}{Data e hora em que o pagamento foi registrado.}{--}
+\dictrow{fk_Venda_id}{INT}{Venda a que o pagamento esta associado.}{FK}
+
+\dictgroup{Estorno}
+\dictrow{id}{INT}{Identificador do estorno.}{PK}
+\dictrow{motivo}{TEXT}{Motivo do estorno.}{--}
+\dictrow{valor}{DECIMAL(12,2)}{Valor estornado do pagamento.}{--}
+\dictrow{data_hora}{DATETIME}{Data e hora em que o estorno foi registrado.}{--}
+\dictrow{fk_Pagamento_id}{INT}{Pagamento ao qual o estorno se refere.}{FK}
+
+\dictgroup{Cancelamento}
+\dictrow{id}{INT}{Identificador do cancelamento.}{PK}
+\dictrow{motivo}{TEXT}{Motivo informado para o cancelamento da venda.}{--}
+\dictrow{data_hora}{DATETIME}{Data e hora em que o cancelamento foi registrado.}{--}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo cancelamento.}{FK}
+\dictrow{fk_Venda_id}{INT}{Venda cancelada; o modelo marca a referencia como unica.}{FK/UNIQUE}
+
+\dictgroup{Cliente}
+\dictrow{id}{INT}{Identificador do cliente.}{PK}
+\dictrow{ativo}{BOOLEAN}{Indica se o cadastro do cliente esta ativo.}{--}
+\dictrow{cpf}{CHAR(11)}{CPF do cliente, armazenado sem mascara.}{--}
+\dictrow{data_cadastro}{DATE}{Data em que o cliente foi cadastrado.}{--}
+\dictrow{data_nascimento}{DATE}{Data de nascimento do cliente.}{--}
+\dictrow{nome}{VARCHAR(120)}{Nome do cliente.}{--}
+
+\dictgroup{Telefone\_Cliente}
+\dictrow{id}{INT}{Identificador do registro de telefone.}{PK}
+\dictrow{numero}{VARCHAR(20)}{Numero de telefone do cliente.}{--}
+\dictrow{tipo}{VARCHAR(30)}{Tipo ou finalidade do telefone, quando informado.}{--}
+\dictrow{fk_Cliente_id}{INT}{Cliente ao qual o telefone pertence.}{FK}
+
+\dictgroup{Email\_Cliente}
+\dictrow{endereco_email}{VARCHAR(254)}{Endereco de e-mail do cliente.}{--}
+\dictrow{id}{INT}{Identificador do registro de e-mail.}{PK}
+\dictrow{tipo}{VARCHAR(30)}{Tipo ou finalidade do e-mail, quando informado.}{--}
+\dictrow{fk_Cliente_id}{INT}{Cliente ao qual o e-mail pertence.}{FK}
+
+\dictgroup{Endereco\_Cliente}
+\dictrow{logradouro}{VARCHAR(150)}{Logradouro do endereco do cliente.}{--}
+\dictrow{id}{INT}{Identificador do endereco.}{PK}
+\dictrow{cep}{CHAR(8)}{CEP do endereco, armazenado sem mascara.}{--}
+\dictrow{cidade}{VARCHAR(100)}{Cidade do endereco.}{--}
+\dictrow{bairro}{VARCHAR(100)}{Bairro do endereco.}{--}
+\dictrow{complemento}{VARCHAR(100)}{Complemento do endereco, quando informado.}{--}
+\dictrow{uf}{CHAR(2)}{Sigla da unidade federativa.}{--}
+\dictrow{numero}{VARCHAR(20)}{Numero ou identificacao do imovel, incluindo valores como S/N.}{--}
+\dictrow{fk_Cliente_id}{INT}{Cliente ao qual o endereco pertence.}{FK}
+
+\dictgroup{Funcionario}
+\dictrow{id}{INT}{Identificador do funcionario.}{PK}
+\dictrow{data_admissao}{DATE}{Data de admissao do funcionario.}{--}
+\dictrow{nome}{VARCHAR(120)}{Nome do funcionario.}{--}
+\dictrow{cargo}{VARCHAR(80)}{Cargo ou funcao exercida pelo funcionario.}{--}
+\dictrow{ativo}{BOOLEAN}{Indica se o funcionario esta ativo.}{--}
+\dictrow{cpf}{CHAR(11)}{CPF do funcionario, armazenado sem mascara.}{--}
+
+\dictgroup{Usuario}
+\dictrow{id}{INT}{Identificador do usuario do sistema.}{PK}
+\dictrow{data_criacao}{DATETIME}{Data e hora de criacao da conta.}{--}
+\dictrow{ativo}{BOOLEAN}{Indica se a conta de usuario esta ativa.}{--}
+\dictrow{login}{VARCHAR(80)}{Identificador de login utilizado pelo usuario.}{--}
+\dictrow{ultimo_acesso}{DATETIME}{Data e hora do ultimo acesso registrado.}{--}
+\dictrow{senha_hash}{VARCHAR(255)}{Hash da senha armazenado para autenticacao; nao representa a senha em texto puro.}{--}
+\dictrow{fk_Perfil_Acesso_id}{INT}{Perfil de acesso associado ao usuario.}{FK}
+\dictrow{fk_Funcionario_id}{INT}{Funcionario associado a conta; o modelo marca a referencia como unica.}{FK/UNIQUE}
+
+\dictgroup{Perfil\_Acesso}
+\dictrow{id}{INT}{Identificador do perfil de acesso.}{PK}
+\dictrow{nome}{VARCHAR(80)}{Nome do perfil de acesso.}{--}
+\dictrow{descricao}{TEXT}{Descricao das permissoes ou finalidade do perfil.}{--}
+
+\dictgroup{Receita}
+\dictrow{id}{INT}{Identificador da receita.}{PK}
+\dictrow{data_emissao}{DATE}{Data de emissao da receita.}{--}
+\dictrow{observacao}{TEXT}{Observacoes complementares sobre a receita.}{--}
+\dictrow{url_documento}{VARCHAR(2048)}{URL ou referencia protegida do documento da receita.}{--}
+\dictrow{tipo_documento}{VARCHAR(30)}{Classificacao do documento de receita.}{--}
+\dictrow{data_validade}{DATE}{Data de validade da receita, quando informada.}{--}
+\dictrow{fk_Venda_id}{INT}{Venda a que a receita esta associada.}{FK}
+\dictrow{fk_Prescritor_id}{INT}{Prescritor responsavel pela receita.}{FK}
+
+\dictgroup{Item\_Receita}
+\dictrow{id}{INT}{Identificador do item de receita.}{PK}
+\dictrow{posologia}{TEXT}{Orientacao de uso prescrita para o medicamento.}{--}
+\dictrow{observacao}{TEXT}{Observacoes complementares do item de receita.}{--}
+\dictrow{quantidade_prescrita}{DECIMAL(10,3)}{Quantidade do medicamento indicada na receita.}{--}
+\dictrow{fk_Receita_id}{INT}{Receita a que o item pertence.}{FK}
+\dictrow{fk_Medicamento_id}{INT}{Medicamento prescrito no item.}{FK}
+
+\dictgroup{Prescritor}
+\dictrow{id}{INT}{Identificador do prescritor.}{PK}
+\dictrow{uf_registro}{CHAR(2)}{Sigla da unidade federativa do registro profissional.}{--}
+\dictrow{nome}{VARCHAR(120)}{Nome do prescritor.}{--}
+\dictrow{registro_profissional}{VARCHAR(30)}{Numero do registro profissional do prescritor.}{--}
+
+\dictgroup{Medicamento\_Principio\_Ativo}
+\dictrow{fk_Principio_Ativo_id}{INT}{Principio ativo associado ao medicamento; participa da chave composta.}{PK/FK}
+\dictrow{fk_Medicamento_id}{INT}{Medicamento associado ao principio ativo; participa da chave composta.}{PK/FK}
+
+\end{longtable}
+\endgroup
 \section{Conclusao}
 O levantamento estabelece o escopo funcional inicial do sistema de gestao de drogaria e registra as regras de integridade, rastreabilidade, seguranca e operacao consolidadas. Esta especificacao servira de base para o DER conceitual em notacao de Peter Chen, seguido do modelo logico, da analise de normalizacao e da implementacao fisica no MySQL.
 
