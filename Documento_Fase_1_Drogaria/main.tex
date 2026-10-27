@@ -282,7 +282,7 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \ruleitem{RB32}{A identificacao do lote e unica pela combinacao Produto + numero do lote. A data de validade pode ficar ausente quando nao for aplicavel ao produto.}
 \ruleitem{RB33}{Quando houver datas de validade, a separacao de produtos para venda deve priorizar os lotes elegiveis com vencimento mais proximo (FEFO). Lotes vencidos ou nao elegiveis nao podem ser dispensados.}
 \ruleitem{RB34}{O saldo de estoque sera apurado a partir das movimentacoes registradas, sem manter uma quantidade independente como fonte oficial no cadastro do lote. O estoque disponivel nao pode ficar negativo.}
-\ruleitem{RB35}{Cada Item de Recebimento deve gerar uma movimentacao de entrada vinculada ao lote correspondente. As movimentacoes de saida de venda devem permitir identificar o Item de Venda e os lotes consumidos.}
+\ruleitem{RB35}{Cada Item de Recebimento deve gerar uma movimentacao de entrada vinculada ao lote correspondente. Para entradas, a rastreabilidade sera feita pelo lote, sem vinculo direto entre Movimentacao de Estoque e Item de Recebimento. As movimentacoes de saida de venda devem permitir identificar o Item de Venda e os lotes consumidos.}
 \ruleitem{RB36}{Cada Ajuste de Estoque deve registrar motivo, data e funcionario responsavel. Um ajuste pode afetar varios lotes, gerando uma movimentacao para cada lote afetado.}
 \ruleitem{RB37}{O cancelamento integral deve preservar a venda original e identificar o funcionario responsavel. Os produtos so devem retornar ao estoque vendavel nos lotes originais quando estiverem aptos; itens improprios nao devem aumentar o estoque vendavel.}
 \ruleitem{RB38}{A situacao operacional da venda sera Em andamento, Concluida ou Cancelada. A venda somente podera ser marcada como Concluida apos a confirmacao do pagamento integral; a situacao financeira sera apurada com base nos itens, pagamentos validos e estornos.}
@@ -290,7 +290,9 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \ruleitem{RB40}{Telefone, e-mail e endereco do cliente serao modelados em entidades separadas. Telefone e e-mail do fornecedor tambem serao entidades separadas, permitindo multiplos contatos por cadastro.}
 \ruleitem{RB41}{Cada funcionario pode ter zero ou uma conta de usuario; cada usuario pertence a exatamente um funcionario e possui um perfil de acesso principal.}
 \ruleitem{RB42}{Uma venda pode estar associada a zero ou varias receitas; cada receita pertence a exatamente uma venda e possui um prescritor. Os itens de receita so podem referenciar produtos cadastrados como medicamentos.}
-\ruleitem{RB43}{Um ajuste de estoque pode gerar varias movimentacoes, uma por lote afetado. Cada movimentacao deve manter uma origem compativel com sua finalidade operacional, permitindo rastreabilidade entre recebimento, venda, cancelamento ou ajuste.}
+\ruleitem{RB43}{Um ajuste de estoque pode gerar varias movimentacoes, uma por lote afetado. Cada movimentacao deve manter uma origem compativel com sua finalidade operacional, permitindo rastreabilidade entre recebimento, venda, cancelamento ou ajuste. A quantidade registrada na movimentacao deve ser sempre positiva; o tipo da movimentacao indica o sentido da variacao do estoque.}
+\ruleitem{RB44}{Cada Item de Recebimento deve referenciar um Item de Compra da mesma Compra associada ao Recebimento, e o Lote informado deve pertencer ao mesmo Produto do Item de Compra.}
+\ruleitem{RB45}{Quando uma Movimentacao de Estoque estiver associada a um Item de Venda, o Lote movimentado deve pertencer ao mesmo Produto vendido nesse item.}
 \end{reqtable}
 
 \section{Premissas e observacoes}
@@ -333,7 +335,7 @@ As figuras a seguir apresentam os modelos conceitual e logico elaborados para o 
 
 \clearpage
 \section{Dicionario de dados}
-O dicionario de dados descreve os atributos do modelo logico, seus tipos previstos para MySQL, suas finalidades e as chaves registradas no modelo. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). A obrigatoriedade de preenchimento, valores padrao e regras de dominio serao detalhados junto com as restricoes do modelo fisico.
+O dicionario de dados descreve os atributos do modelo logico, seus tipos previstos para MySQL, suas finalidades e as chaves existentes ou definidas para implementacao. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). A obrigatoriedade de preenchimento, valores padrao e regras de dominio serao detalhados junto com as restricoes do modelo fisico.
 
 \begingroup
 \small
@@ -365,7 +367,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{descricao}{TEXT}{Descricao complementar do produto.}{--}
 \dictrow{nome}{VARCHAR(120)}{Nome de cadastro do produto.}{--}
 \dictrow{preco_venda}{DECIMAL(12,2)}{Preco atual de venda cadastrado para o produto.}{--}
-\dictrow{codigo_barras}{VARCHAR(20)}{Codigo de barras do produto, quando informado.}{--}
+\dictrow{codigo_barras}{VARCHAR(20)}{Codigo de barras do produto, unico quando informado.}{UNIQUE}
 \dictrow{fk_Categoria_id}{INT}{Categoria principal associada ao produto.}{FK}
 \dictrow{fk_Fabricante_id}{INT}{Fabricante associado ao produto.}{FK}
 
@@ -378,7 +380,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{id}{INT}{Identificador do fabricante.}{PK}
 \dictrow{ativo}{BOOLEAN}{Indica se o fabricante esta ativo para novos cadastros ou operacoes.}{--}
 \dictrow{nome_fantasia}{VARCHAR(120)}{Nome fantasia do fabricante.}{--}
-\dictrow{cnpj}{CHAR(14)}{CNPJ do fabricante, armazenado sem mascara.}{--}
+\dictrow{cnpj}{CHAR(14)}{CNPJ unico do fabricante, armazenado sem mascara.}{UNIQUE}
 \dictrow{razao_social}{VARCHAR(150)}{Razao social do fabricante.}{--}
 
 \dictgroup{Medicamento}
@@ -393,9 +395,8 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 
 \dictgroup{Lote}
 \dictrow{id}{INT}{Identificador do lote.}{PK}
-\dictrow{custo_unitario}{DECIMAL(12,2)}{Custo unitario de aquisicao registrado para o lote.}{--}
 \dictrow{data_fabricacao}{DATE}{Data de fabricacao do lote, quando informada.}{--}
-\dictrow{numero_lote}{VARCHAR(50)}{Numero de identificacao do lote informado pelo fabricante.}{--}
+\dictrow{numero_lote}{VARCHAR(50)}{Numero do lote; unico em conjunto com o produto.}{UNIQUE/\allowbreak composta}
 \dictrow{data_validade}{DATE}{Data de validade do lote, quando aplicavel.}{--}
 \dictrow{fk_Produto_id}{INT}{Produto ao qual o lote pertence.}{FK}
 
@@ -419,7 +420,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 
 \dictgroup{Fornecedor}
 \dictrow{id}{INT}{Identificador do fornecedor.}{PK}
-\dictrow{cnpj}{CHAR(14)}{CNPJ do fornecedor, armazenado sem mascara.}{--}
+\dictrow{cnpj}{CHAR(14)}{CNPJ unico do fornecedor, armazenado sem mascara.}{UNIQUE}
 \dictrow{razao_social}{VARCHAR(150)}{Razao social do fornecedor.}{--}
 \dictrow{nome_fantasia}{VARCHAR(120)}{Nome fantasia do fornecedor.}{--}
 \dictrow{ativo}{BOOLEAN}{Indica se o fornecedor esta ativo para novas operacoes.}{--}
@@ -440,7 +441,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{id}{INT}{Identificador do pedido de compra.}{PK}
 \dictrow{data_pedido}{DATETIME}{Data e hora de registro do pedido.}{--}
 \dictrow{observacao}{TEXT}{Observacoes sobre o pedido de compra.}{--}
-\dictrow{status}{VARCHAR(30)}{Situacao operacional do pedido de compra.}{--}
+\dictrow{status}{VARCHAR(30)}{Situacao do pedido, armazenada e atualizada quando ha recebimentos.}{--}
 \dictrow{fk_Fornecedor_id}{INT}{Fornecedor ao qual o pedido foi feito.}{FK}
 \dictrow{fk_Funcionario_id}{INT}{Funcionario responsavel pelo pedido.}{FK}
 
@@ -461,7 +462,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictgroup{Item\_Recebimento}
 \dictrow{id}{INT}{Identificador do item recebido.}{PK}
 \dictrow{quantidade_recebida}{DECIMAL(10,3)}{Quantidade efetivamente recebida do item.}{--}
-\dictrow{custo_unitario_real}{DECIMAL(12,2)}{Custo unitario efetivamente registrado no recebimento.}{--}
+\dictrow{custo_unitario_real}{DECIMAL(12,2)}{Custo unitario efetivo desta entrega; fonte do custo por recebimento.}{--}
 \dictrow{fk_Recebimento_id}{INT}{Recebimento ao qual o item pertence.}{FK}
 \dictrow{fk_Item_Compra_id}{INT}{Item do pedido de compra atendido pelo recebimento.}{FK}
 \dictrow{fk_Lote_id}{INT}{Lote associado aos produtos recebidos, quando aplicavel.}{FK}
@@ -479,7 +480,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{preco_unitario}{DECIMAL(12,2)}{Preco unitario praticado no momento da venda.}{--}
 \dictrow{percentual_desconto}{DECIMAL(5,2)}{Percentual de desconto aplicado ao item.}{--}
 \dictrow{quantidade}{DECIMAL(10,3)}{Quantidade vendida do produto.}{--}
-\dictrow{valor_total}{DECIMAL(12,2)}{Valor final do item apos a aplicacao do desconto.}{--}
+\dictrow{valor_total}{DECIMAL(12,2)}{Valor final do item, mantido no modelo e atualizado conforme quantidade, preco unitario e desconto.}{--}
 \dictrow{fk_Venda_id}{INT}{Venda a que o item pertence.}{FK}
 \dictrow{fk_Produto_id}{INT}{Produto vendido.}{FK}
 \dictrow{fk_Item_Receita_id}{INT}{Item de receita associado a venda, quando houver.}{FK/\allowbreak UNIQUE}
@@ -509,7 +510,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictgroup{Cliente}
 \dictrow{id}{INT}{Identificador do cliente.}{PK}
 \dictrow{ativo}{BOOLEAN}{Indica se o cadastro do cliente esta ativo.}{--}
-\dictrow{cpf}{CHAR(11)}{CPF do cliente, armazenado sem mascara.}{--}
+\dictrow{cpf}{CHAR(11)}{CPF unico quando informado, armazenado sem mascara.}{UNIQUE}
 \dictrow{data_cadastro}{DATE}{Data em que o cliente foi cadastrado.}{--}
 \dictrow{data_nascimento}{DATE}{Data de nascimento do cliente.}{--}
 \dictrow{nome}{VARCHAR(120)}{Nome do cliente.}{--}
@@ -543,13 +544,13 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \dictrow{nome}{VARCHAR(120)}{Nome do funcionario.}{--}
 \dictrow{cargo}{VARCHAR(80)}{Cargo ou funcao exercida pelo funcionario.}{--}
 \dictrow{ativo}{BOOLEAN}{Indica se o funcionario esta ativo.}{--}
-\dictrow{cpf}{CHAR(11)}{CPF do funcionario, armazenado sem mascara.}{--}
+\dictrow{cpf}{CHAR(11)}{CPF unico do funcionario, armazenado sem mascara.}{UNIQUE}
 
 \dictgroup{Usuario}
 \dictrow{id}{INT}{Identificador do usuario do sistema.}{PK}
 \dictrow{data_criacao}{DATETIME}{Data e hora de criacao da conta.}{--}
 \dictrow{ativo}{BOOLEAN}{Indica se a conta de usuario esta ativa.}{--}
-\dictrow{login}{VARCHAR(80)}{Identificador de login utilizado pelo usuario.}{--}
+\dictrow{login}{VARCHAR(80)}{Identificador unico de login utilizado pelo usuario.}{UNIQUE}
 \dictrow{ultimo_acesso}{DATETIME}{Data e hora do ultimo acesso registrado.}{--}
 \dictrow{senha_hash}{VARCHAR(255)}{Hash da senha armazenado para autenticacao; nao representa a senha em texto puro.}{--}
 \dictrow{fk_Perfil_Acesso_id}{INT}{Perfil de acesso associado ao usuario.}{FK}
@@ -595,7 +596,7 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos previst
 \subsection{Escopo e dependências funcionais consideradas}
 Foram avaliadas as 31 relações do modelo lógico. A análise considera as chaves primárias, as chaves estrangeiras marcadas como únicas no modelo e as regras de negócio que definem identificadores alternativos. As dependências funcionais são inferidas dessas chaves: cada chave candidata determina os demais atributos da respectiva relação. Como o projeto ainda não possui dados de implementação, esta é uma avaliação estrutural do esquema.
 
-O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas. As regras RB29 e RB32 definem, respectivamente, a unicidade do código de barras informado e a identificação de lote pela combinação de produto e número do lote. Essas duas restrições ainda precisam ser explicitadas no modelo lógico ou no modelo físico para que sejam garantidas pelo banco.
+O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas e as unicidades definidas. As regras RB29 e RB32 determinam a unicidade do código de barras informado e a identificação de lote pela combinação de produto e número do lote. Essas restrições, assim como as unicidades de CPF, CNPJ e login, deverão ser representadas nos modelos e implementadas no banco.
 
 \begingroup
 \small
@@ -618,15 +619,15 @@ O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas. As regras 
 \endfoot
 \hline
 \endlastfoot
-Produto & \texttt{id}; \url{codigo_barras} & Código de barras único quando informado (RB29); restrição a formalizar.\\\hline
+Produto & \texttt{id}; \url{codigo_barras} & Código de barras único quando informado (RB29); adicionar restrição aos modelos.\\\hline
 Categoria & \texttt{id} & --\\\hline
-Fabricante & \texttt{id} & --\\\hline
+Fabricante & \texttt{id}; \texttt{cnpj} & CNPJ único.\\\hline
 Medicamento & \texttt{id} & Chave primaria compartilhada com a chave estrangeira para Produto.\\\hline
 \url{Principio_Ativo} & \texttt{id} & --\\\hline
-Lote & \texttt{id}; (\url{fk_Produto_id}, \url{numero_lote}) & Chave alternativa definida pela RB32; restrição composta a formalizar.\\\hline
+Lote & \texttt{id}; (\url{fk_Produto_id}, \url{numero_lote}) & Chave alternativa da RB32; adicionar restrição composta aos modelos.\\\hline
 \url{Movimentacao_Estoque} & \texttt{id} & --\\\hline
 \url{Ajuste_Estoque} & \texttt{id} & --\\\hline
-Fornecedor & \texttt{id} & --\\\hline
+Fornecedor & \texttt{id}; \texttt{cnpj} & CNPJ único.\\\hline
 \url{Telefone_Fornecedor} & \texttt{id} & --\\\hline
 \url{Email_Fornecedor} & \texttt{id} & --\\\hline
 Compra & \texttt{id} & --\\\hline
@@ -638,16 +639,16 @@ Venda & \texttt{id} & --\\\hline
 Pagamento & \texttt{id} & --\\\hline
 Estorno & \texttt{id} & --\\\hline
 Cancelamento & \texttt{id}; \texttt{fk\_Venda\_id} & Uma venda pode ter no maximo um cancelamento.\\\hline
-Cliente & \texttt{id} & --\\\hline
+Cliente & \texttt{id}; \texttt{cpf} & CPF único quando informado.\\\hline
 \url{Telefone_Cliente} & \texttt{id} & --\\\hline
 \url{Email_Cliente} & \texttt{id} & --\\\hline
 \url{Endereco_Cliente} & \texttt{id} & --\\\hline
-Funcionario & \texttt{id} & --\\\hline
-Usuario & \texttt{id}; \texttt{fk\_Funcionario\_id} & Cada funcionario pode possuir no maximo uma conta.\\\hline
+Funcionario & \texttt{id}; \texttt{cpf} & CPF único.\\\hline
+Usuario & \texttt{id}; \texttt{fk\_Funcionario\_id}; \texttt{login} & Funcionário associado e login únicos.\\\hline
 \url{Perfil_Acesso} & \texttt{id} & --\\\hline
 Receita & \texttt{id} & --\\\hline
 \url{Item_Receita} & \texttt{id} & --\\\hline
-Prescritor & \texttt{id} & --\\\hline
+Prescritor & \texttt{id} & A unicidade do registro profissional não foi definida.\\\hline
 \url{Medicamento_Principio_Ativo} & (\url{fk_Medicamento_id}, \url{fk_Principio_Ativo_id}) & Chave primaria composta; nao ha atributos nao-chave.\\\hline
 \end{longtable}
 \endgroup
@@ -662,15 +663,17 @@ As relações cuja chave primária é simples atendem à 2FN, pois não existe u
 Considerando as dependências funcionais identificadas, não há atributo não-chave que determine outro atributo não-chave dentro da mesma relação. Dados de categorias e fabricantes ficam em suas próprias relações, dados de fornecedores não são repetidos em compras, dados de perfil não são copiados para usuários e os contatos múltiplos foram decompostos em relações separadas. Assim, não foram identificadas dependências transitivas que exijam nova decomposição para atingir a 3FN.
 
 \subsection{Forma Normal de Boyce-Codd (BCNF)}
-Pelas dependências funcionais identificadas, os determinantes não triviais são chaves candidatas: as chaves primárias simples, as referências únicas de \texttt{Usuario}, \texttt{Cancelamento} e \texttt{Item\_Venda}, a chave alternativa de código de barras quando preenchida e a identificação composta de lote. Sob esse conjunto de dependências, as relações atendem à BCNF. A conclusão depende da implementação das restrições de unicidade apontadas no Quadro~\ref{tab:chaves-normalizacao} e da confirmação de que não há outras regras de negócio que criem dependências funcionais.
+Pelas dependências funcionais identificadas, os determinantes não triviais são chaves candidatas: as chaves primárias simples, as referências únicas de \texttt{Usuario}, \texttt{Cancelamento} e \texttt{Item\_Venda}, as unicidades definidas para CPF, CNPJ e login, o código de barras quando preenchido e a identificação composta de lote. Sob esse conjunto de dependências, as relações atendem à BCNF. A conclusão depende da implementação das restrições de unicidade apontadas no Quadro~\ref{tab:chaves-normalizacao} e da confirmação de que não há outras regras de negócio que criem dependências funcionais.
 
 \subsection{Pontos de atenção para a implementação}
 Os itens a seguir não constituem, por si só, violações de BCNF, mas precisam de definição para preservar a consistência dos dados:
 \begin{itemize}
-\item O atributo \texttt{valor\_total} de \texttt{Item\_Venda} pode ser calculado a partir de quantidade, preço unitário e desconto. Se for armazenado como fotografia do valor praticado, o banco ou a aplicação deverá garantir que ele seja consistente com esses dados.
-\item \texttt{Lote.custo\_unitario} e \texttt{Item\_Recebimento.custo\_unitario\_real} podem representar informações sobrepostas. É necessário definir se o custo pertence ao lote, a cada recebimento, ou se ambos têm significados distintos, por exemplo custo de referência do lote e custo efetivo de cada entrada.
-\item A unicidade de atributos naturais como CPF, CNPJ, login e registro profissional do prescritor não foi inferida sem regra explícita no modelo. Os requisitos devem dizer quais identificadores são únicos antes da criação das restrições físicas.
-\item A situação da compra pode ser derivada das quantidades recebidas em relação aos itens solicitados. Se o atributo \texttt{status} for mantido, sua atualização deve permanecer sincronizada com os recebimentos.
+\item \texttt{Item\_Venda.valor\_total} permanecerá armazenado. Seu valor deve ser atualizado de acordo com quantidade, preço unitário e desconto, preservando a consistência com os valores da venda.
+\item O custo real será registrado em \texttt{Item\_Recebimento.custo\_unitario\_real}; o atributo \texttt{Lote.custo\_unitario} será removido do modelo.
+\item CPF de Cliente e Funcionário, CNPJ de Fornecedor e Fabricante e login de Usuário serão únicos. O número de registro do prescritor permanece sem unicidade definida enquanto não houver identificação do conselho ou profissão.
+\item \texttt{Compra.status} permanecerá armazenado e deverá ser atualizado sempre que os recebimentos forem registrados, na mesma operação transacional que atualiza os dados relacionados.
+\item As restrições do modelo físico deverão impedir que um item recebido se vincule a uma compra diferente da associada ao recebimento ou a um lote de outro produto; também deverão garantir que o lote movimentado em uma venda pertença ao produto vendido.
+\item A quantidade de cada movimentação será positiva; o tipo da movimentação determinará se o saldo aumenta ou diminui. Os valores permitidos para o tipo serão definidos na etapa de implementação.
 \end{itemize}
 
 \section{Conclusao}
