@@ -10,7 +10,7 @@
         <Alinhamento_h Valor="60"/>
         <Zoom Valor="100"/>
         <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
-        <Localizacao Left="872" Top="1260"/>
+        <Localizacao Left="292" Top="1380"/>
         <Realce Valor="false"/>
         <SeparatorSQL Valor=";"/>
         <Prefixo Valor=""/>
@@ -3084,7 +3084,7 @@
         </Constraints>
     </Tabela>
     <Tabela ID="30">
-        <Bounds Height="215" Left="2052" Top="1307" Width="150"/>
+        <Bounds Height="193" Left="2052" Top="1307" Width="150"/>
         <DisablePainted Valor="false"/>
         <Texto>Item_Receita</Texto>
         <Observacao/>
@@ -3170,16 +3170,6 @@
                 <Fkey Valor="true"/>
                 <Unique Valor="false"/>
             </Campo>
-            <Campo>
-                <Texto>fk_Medicamento_fk_Produto_id</Texto>
-                <Tipo/>
-                <Complemento/>
-                <Dicionario/>
-                <Observacao/>
-                <Key Valor="false"/>
-                <Fkey Valor="true"/>
-                <Unique Valor="false"/>
-            </Campo>
         </Campos>
         <Constraints>
             <Constraint>
@@ -3213,7 +3203,7 @@
                 <DdlOnUpdate/>
                 <DdlOnDelete>CASCADE</DdlOnDelete>
                 <LigacaoParaOrigem ID="146"/>
-                <ConstraintOrigem CamposDestino="[5, 6]" CamposOrigem="[0, -1]" ID="5,0">IR chave primária</ConstraintOrigem>
+                <ConstraintOrigem CamposDestino="[5, -1]" CamposOrigem="[0, -1]" ID="5,0">IR chave primária</ConstraintOrigem>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -3332,7 +3322,7 @@
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
-                <Key Valor="false"/>
+                <Key Valor="true"/>
                 <Fkey Valor="true"/>
                 <Unique Valor="false"/>
             </Campo>
@@ -3342,7 +3332,7 @@
                 <Complemento/>
                 <Dicionario/>
                 <Observacao/>
-                <Key Valor="false"/>
+                <Key Valor="true"/>
                 <Fkey Valor="true"/>
                 <Unique Valor="false"/>
             </Campo>
@@ -3369,6 +3359,17 @@
                 <DdlOnDelete/>
                 <LigacaoParaOrigem ID="-1"/>
                 <ConstraintOrigem CamposDestino="[1, -1]" CamposOrigem="[0, -1]" ID="5,0">IR chave primária</ConstraintOrigem>
+            </Constraint>
+            <Constraint>
+                <Nome Valor=""/>
+                <Nomeada Valor="false"/>
+                <Tipo Valor="0"/>
+                <Dicionario/>
+                <Observacao/>
+                <DdlOnUpdate/>
+                <DdlOnDelete/>
+                <LigacaoParaOrigem ID="-1"/>
+                <ConstraintOrigem CamposDestino="[-1, -1]" CamposOrigem="[0, 1]" ID="-1,-1"/>
             </Constraint>
         </Constraints>
     </Tabela>
@@ -3846,7 +3847,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -4038,7 +4039,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -4182,7 +4183,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="3"/>
+            <Card Valor="2"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -4543,7 +4544,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -4577,7 +4578,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -4591,7 +4592,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -5033,7 +5034,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -5047,7 +5048,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -5095,7 +5096,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
             <Ancorado Valor="false"/>
             <TamanhoAutmatico Valor="true"/>
-            <Card Valor="1"/>
+            <Card Valor="0"/>
             <MovimentacaoManual Valor="false"/>
             <Papel Valor=""/>
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
@@ -5309,7 +5310,7 @@
         <Pontos>
             <Ponto Left="1583" Top="1744"/>
             <Ponto Left="2088" Top="1744"/>
-            <Ponto Left="2088" Top="1519"/>
+            <Ponto Left="2088" Top="1498"/>
         </Pontos>
         <LogicoCardinalidade ID="147">
             <Bounds Height="14" Left="1593" Top="1732" Width="35"/>
@@ -5326,7 +5327,7 @@
             <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
         </LogicoCardinalidade>
         <LogicoCardinalidade ID="148">
-            <Bounds Height="14" Left="2055" Top="1529" Width="35"/>
+            <Bounds Height="14" Left="2055" Top="1508" Width="35"/>
             <DisablePainted Valor="false"/>
             <Texto>Cardinalidade_76</Texto>
             <Observacao/>
