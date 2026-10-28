@@ -1,6 +1,6 @@
 -- Modelo fisico - Drogaria
 -- MySQL 8.0.16+ / InnoDB / utf8mb4
--- Este arquivo define a estrutura; nao executa CREATE DATABASE nem conecta a servidor.
+-- Cria os objetos do banco; nao inclui dados de teste nem configura conexao com servidor.
 
 CREATE SCHEMA IF NOT EXISTS `drogaria`
   DEFAULT CHARACTER SET utf8mb4
@@ -82,6 +82,7 @@ CREATE TABLE `Produto` (
   `fk_Categoria_id` INT NOT NULL,
   `fk_Fabricante_id` INT NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `idx_Produto_nome` (`nome`),
   CONSTRAINT `uq_Produto_codigo_barras` UNIQUE (`codigo_barras`),
   CONSTRAINT `ck_Produto_estoque_minimo` CHECK (`estoque_minimo` IS NULL OR `estoque_minimo` >= 0),
   CONSTRAINT `ck_Produto_preco_venda` CHECK (`preco_venda` >= 0),
@@ -104,6 +105,7 @@ CREATE TABLE `Lote` (
   `data_validade` DATE NULL,
   `fk_Produto_id` INT NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `idx_Lote_data_validade` (`data_validade`),
   CONSTRAINT `uq_Lote_Produto_numero` UNIQUE (`fk_Produto_id`, `numero_lote`),
   CONSTRAINT `ck_Lote_datas` CHECK (`data_fabricacao` IS NULL OR `data_validade` IS NULL OR `data_validade` >= `data_fabricacao`),
   CONSTRAINT `fk_Lote_Produto` FOREIGN KEY (`fk_Produto_id`) REFERENCES `Produto` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -127,6 +129,7 @@ CREATE TABLE `Compra` (
   `fk_Fornecedor_id` INT NOT NULL,
   `fk_Funcionario_id` INT NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `idx_Compra_status_data` (`status`, `data_pedido`),
   CONSTRAINT `ck_Compra_status` CHECK (`status` IN ('PENDENTE','PARCIALMENTE_RECEBIDA','CONCLUIDA')),
   CONSTRAINT `fk_Compra_Fornecedor` FOREIGN KEY (`fk_Fornecedor_id`) REFERENCES `Fornecedor` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_Compra_Funcionario` FOREIGN KEY (`fk_Funcionario_id`) REFERENCES `Funcionario` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -179,6 +182,7 @@ CREATE TABLE `Venda` (
   `fk_Funcionario_id` INT NOT NULL,
   `fk_Cliente_id` INT NULL,
   PRIMARY KEY (`id`),
+  KEY `idx_Venda_data_status` (`data_hora`, `status`),
   CONSTRAINT `ck_Venda_status` CHECK (`status` IN ('EM_ANDAMENTO','CONCLUIDA','CANCELADA')),
   CONSTRAINT `fk_Venda_Funcionario` FOREIGN KEY (`fk_Funcionario_id`) REFERENCES `Funcionario` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_Venda_Cliente` FOREIGN KEY (`fk_Cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -354,6 +358,7 @@ CREATE TABLE `Movimentacao_Estoque` (
   `fk_Ajuste_Estoque_id` INT NULL,
   `fk_Item_Venda_id` INT NULL,
   PRIMARY KEY (`id`),
+  KEY `idx_Movimentacao_Lote_data` (`fk_Lote_id`, `data_hora`),
   CONSTRAINT `ck_Movimentacao_tipo` CHECK (`tipo_movimentacao` IN ('ENTRADA','SAIDA','AJUSTE_ENTRADA','AJUSTE_SAIDA')),
   CONSTRAINT `ck_Movimentacao_quantidade` CHECK (`quantidade` > 0),
   CONSTRAINT `ck_Movimentacao_origem` CHECK (`fk_Ajuste_Estoque_id` IS NULL OR `fk_Item_Venda_id` IS NULL),
@@ -369,3 +374,232 @@ CREATE TABLE `Medicamento_Principio_Ativo` (
   CONSTRAINT `fk_MPA_Principio_Ativo` FOREIGN KEY (`fk_Principio_Ativo_id`) REFERENCES `Principio_Ativo` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT `fk_MPA_Medicamento` FOREIGN KEY (`fk_Medicamento_id`) REFERENCES `Medicamento` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
+
+
+-- Objetos complementares relacionados ao conteúdo de SQL Parte II.
+
+-- Saldo atual consolidado a partir das movimentações registradas por lote.
+CREATE OR REPLACE VIEW `vw_Estoque_Produto` AS
+SELECT
+  p.`id` AS `produto_id`,
+  p.`nome` AS `produto`,
+  p.`unidade_medida`,
+  p.`estoque_minimo`,
+  COALESCE(SUM(
+    CASE
+      WHEN me.`tipo_movimentacao` IN ('ENTRADA', 'AJUSTE_ENTRADA') THEN me.`quantidade`
+      WHEN me.`tipo_movimentacao` IN ('SAIDA', 'AJUSTE_SAIDA') THEN -me.`quantidade`
+      ELSE 0
+    END
+  ), 0) AS `estoque_atual`
+FROM `Produto` AS p
+LEFT JOIN `Lote` AS l ON l.`fk_Produto_id` = p.`id`
+LEFT JOIN `Movimentacao_Estoque` AS me ON me.`fk_Lote_id` = l.`id`
+GROUP BY p.`id`, p.`nome`, p.`unidade_medida`, p.`estoque_minimo`;
+
+-- Recalcula o status armazenado da compra com base nas quantidades recebidas.
+DROP PROCEDURE IF EXISTS `sp_Recalcular_Status_Compra`;
+DELIMITER $$
+CREATE PROCEDURE `sp_Recalcular_Status_Compra`(IN p_compra_id INT)
+BEGIN
+  DECLARE v_qtd_solicitada DECIMAL(20,3) DEFAULT 0;
+  DECLARE v_qtd_recebida DECIMAL(20,3) DEFAULT 0;
+  DECLARE v_status VARCHAR(30);
+
+  SELECT COALESCE(SUM(ic.`quantidade_solicitada`), 0)
+    INTO v_qtd_solicitada
+  FROM `Item_Compra` AS ic
+  WHERE ic.`fk_Compra_id` = p_compra_id;
+
+  SELECT COALESCE(SUM(ir.`quantidade_recebida`), 0)
+    INTO v_qtd_recebida
+  FROM `Item_Recebimento` AS ir
+  INNER JOIN `Item_Compra` AS ic ON ic.`id` = ir.`fk_Item_Compra_id`
+  WHERE ic.`fk_Compra_id` = p_compra_id;
+
+  IF v_qtd_solicitada = 0 OR v_qtd_recebida = 0 THEN
+    SET v_status = 'PENDENTE';
+  ELSEIF v_qtd_recebida >= v_qtd_solicitada THEN
+    SET v_status = 'CONCLUIDA';
+  ELSE
+    SET v_status = 'PARCIALMENTE_RECEBIDA';
+  END IF;
+
+  UPDATE `Compra`
+  SET `status` = v_status
+  WHERE `id` = p_compra_id;
+END$$
+
+-- Impede que o recebimento associe compras ou produtos incompatíveis.
+DROP TRIGGER IF EXISTS `bi_Item_Recebimento_validar`$$
+CREATE TRIGGER `bi_Item_Recebimento_validar`
+BEFORE INSERT ON `Item_Recebimento`
+FOR EACH ROW
+BEGIN
+  DECLARE v_compra_recebimento INT;
+  DECLARE v_compra_item INT;
+  DECLARE v_produto_item INT;
+  DECLARE v_produto_lote INT;
+
+  SELECT r.`fk_Compra_id`
+    INTO v_compra_recebimento
+  FROM `Recebimento` AS r
+  WHERE r.`id` = NEW.`fk_Recebimento_id`;
+
+  SELECT ic.`fk_Compra_id`, ic.`fk_Produto_id`
+    INTO v_compra_item, v_produto_item
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = NEW.`fk_Item_Compra_id`;
+
+  SELECT l.`fk_Produto_id`
+    INTO v_produto_lote
+  FROM `Lote` AS l
+  WHERE l.`id` = NEW.`fk_Lote_id`;
+
+  IF v_compra_recebimento <> v_compra_item THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'O recebimento e o item de compra devem pertencer à mesma compra.';
+  END IF;
+
+  IF v_produto_item <> v_produto_lote THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'O lote recebido deve corresponder ao produto do item de compra.';
+  END IF;
+END$$
+
+DROP TRIGGER IF EXISTS `bu_Item_Recebimento_validar`$$
+CREATE TRIGGER `bu_Item_Recebimento_validar`
+BEFORE UPDATE ON `Item_Recebimento`
+FOR EACH ROW
+BEGIN
+  DECLARE v_compra_recebimento INT;
+  DECLARE v_compra_item INT;
+  DECLARE v_produto_item INT;
+  DECLARE v_produto_lote INT;
+
+  SELECT r.`fk_Compra_id`
+    INTO v_compra_recebimento
+  FROM `Recebimento` AS r
+  WHERE r.`id` = NEW.`fk_Recebimento_id`;
+
+  SELECT ic.`fk_Compra_id`, ic.`fk_Produto_id`
+    INTO v_compra_item, v_produto_item
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = NEW.`fk_Item_Compra_id`;
+
+  SELECT l.`fk_Produto_id`
+    INTO v_produto_lote
+  FROM `Lote` AS l
+  WHERE l.`id` = NEW.`fk_Lote_id`;
+
+  IF v_compra_recebimento <> v_compra_item THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'O recebimento e o item de compra devem pertencer à mesma compra.';
+  END IF;
+
+  IF v_produto_item <> v_produto_lote THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'O lote recebido deve corresponder ao produto do item de compra.';
+  END IF;
+END$$
+
+-- Mantém Compra.status atualizado quando os recebimentos mudam.
+DROP TRIGGER IF EXISTS `ai_Item_Recebimento_status_compra`$$
+CREATE TRIGGER `ai_Item_Recebimento_status_compra`
+AFTER INSERT ON `Item_Recebimento`
+FOR EACH ROW
+BEGIN
+  DECLARE v_compra_id INT;
+  SELECT ic.`fk_Compra_id` INTO v_compra_id
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = NEW.`fk_Item_Compra_id`;
+  CALL `sp_Recalcular_Status_Compra`(v_compra_id);
+END$$
+
+DROP TRIGGER IF EXISTS `au_Item_Recebimento_status_compra`$$
+CREATE TRIGGER `au_Item_Recebimento_status_compra`
+AFTER UPDATE ON `Item_Recebimento`
+FOR EACH ROW
+BEGIN
+  DECLARE v_compra_antiga INT;
+  DECLARE v_compra_nova INT;
+  SELECT ic.`fk_Compra_id` INTO v_compra_antiga
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = OLD.`fk_Item_Compra_id`;
+  SELECT ic.`fk_Compra_id` INTO v_compra_nova
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = NEW.`fk_Item_Compra_id`;
+  CALL `sp_Recalcular_Status_Compra`(v_compra_antiga);
+  IF v_compra_nova <> v_compra_antiga THEN
+    CALL `sp_Recalcular_Status_Compra`(v_compra_nova);
+  END IF;
+END$$
+
+DROP TRIGGER IF EXISTS `ad_Item_Recebimento_status_compra`$$
+CREATE TRIGGER `ad_Item_Recebimento_status_compra`
+AFTER DELETE ON `Item_Recebimento`
+FOR EACH ROW
+BEGIN
+  DECLARE v_compra_id INT;
+  SELECT ic.`fk_Compra_id` INTO v_compra_id
+  FROM `Item_Compra` AS ic
+  WHERE ic.`id` = OLD.`fk_Item_Compra_id`;
+  CALL `sp_Recalcular_Status_Compra`(v_compra_id);
+END$$
+
+-- Garante que o item de receita e o item vendido sejam da mesma venda
+-- e que o produto vendido seja o medicamento prescrito.
+DROP TRIGGER IF EXISTS `bi_Item_Venda_validar_receita`$$
+CREATE TRIGGER `bi_Item_Venda_validar_receita`
+BEFORE INSERT ON `Item_Venda`
+FOR EACH ROW
+BEGIN
+  DECLARE v_venda_receita INT;
+  DECLARE v_medicamento_id INT;
+
+  IF NEW.`fk_Item_Receita_id` IS NOT NULL THEN
+    SELECT r.`fk_Venda_id`, ir.`fk_Medicamento_id`
+      INTO v_venda_receita, v_medicamento_id
+    FROM `Item_Receita` AS ir
+    INNER JOIN `Receita` AS r ON r.`id` = ir.`fk_Receita_id`
+    WHERE ir.`id` = NEW.`fk_Item_Receita_id`;
+
+    IF v_venda_receita <> NEW.`fk_Venda_id` THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'A receita deve pertencer à mesma venda do item vendido.';
+    END IF;
+
+    IF v_medicamento_id <> NEW.`fk_Produto_id` THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O produto vendido deve corresponder ao medicamento prescrito.';
+    END IF;
+  END IF;
+END$$
+
+DROP TRIGGER IF EXISTS `bu_Item_Venda_validar_receita`$$
+CREATE TRIGGER `bu_Item_Venda_validar_receita`
+BEFORE UPDATE ON `Item_Venda`
+FOR EACH ROW
+BEGIN
+  DECLARE v_venda_receita INT;
+  DECLARE v_medicamento_id INT;
+
+  IF NEW.`fk_Item_Receita_id` IS NOT NULL THEN
+    SELECT r.`fk_Venda_id`, ir.`fk_Medicamento_id`
+      INTO v_venda_receita, v_medicamento_id
+    FROM `Item_Receita` AS ir
+    INNER JOIN `Receita` AS r ON r.`id` = ir.`fk_Receita_id`
+    WHERE ir.`id` = NEW.`fk_Item_Receita_id`;
+
+    IF v_venda_receita <> NEW.`fk_Venda_id` THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'A receita deve pertencer à mesma venda do item vendido.';
+    END IF;
+
+    IF v_medicamento_id <> NEW.`fk_Produto_id` THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O produto vendido deve corresponder ao medicamento prescrito.';
+    END IF;
+  END IF;
+END$$
+DELIMITER ;
