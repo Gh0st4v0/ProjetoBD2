@@ -126,13 +126,14 @@
 
 \begingroup
 \small
+\singlespacing
 \tableofcontents
 \endgroup
 \clearpage
 
 \section{Identificacao do projeto}
 \textbf{Projeto:} Sistema de Gestao de Drogaria\\
-\textbf{Disciplina:} SPOBDD2 — Elaborar em fases o Plano do Projeto de BD
+\textbf{Disciplina:} SPOBDD2
 
 \section{Descricao do sistema}
 O projeto propoe um sistema de banco de dados para apoiar as operacoes de uma drogaria, abrangendo o cadastro de produtos e clientes, controle de estoque por lote quando aplicavel, fornecedores e compras, vendas, pagamentos, receitas medicas digitalizadas ou digitais e controle de acesso por perfil de usuario.
@@ -303,12 +304,12 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 \item O banco foi implementado em MySQL. O script de criacao, as rotinas de integridade e o roteiro de validacao estao descritos na Secao~\ref{sec:implementacao-validacao}.
 \item A URL ou referencia da receita aponta para documento armazenado fora do banco; o armazenamento externo devera oferecer controle de acesso apropriado.
 \item As regras de validade, assinatura e dispensacao de receitas variam conforme o tipo de documento e medicamento. O sistema devera respeitar os requisitos aplicaveis, sem pretender substituir uma analise regulatoria completa.
-\item Os relatorios operacionais serao implementados como consultas SQL e, se util, views. Nao sera criada uma entidade de negocio chamada Relatorio.
-\item Esta secao registra as premissas usadas na modelagem. O dicionario descreve os atributos e tipos do modelo logico; a analise de normalizacao, a implementacao fisica em MySQL e os testes do banco estao documentados nas secoes seguintes.
+\item Os requisitos RF30 a RF34 preveem consultas operacionais. O DDL desta entrega inclui a view de saldo do estoque; as consultas do roteiro sao demonstrativas, e os relatorios administrativos completos permanecem fora do escopo implementado. Nao foi criada uma entidade de negocio chamada Relatorio.
+\item A apresentacao deste documento toma como referencia as normas ABNT NBR 14724:2024, NBR 10520:2023 e NBR 6023:2025 para trabalhos academicos, citacoes e referencias.
 \end{itemize}
 
 \section{Modelos de dados}
-As figuras a seguir apresentam os modelos conceitual e logico elaborados para o sistema de gestao de drogaria.
+As figuras a seguir apresentam os modelos conceitual e logico elaborados para o sistema de gestao de drogaria. O modelo conceitual segue a abordagem entidade-relacionamento proposta por Chen (1976).
 
 \clearpage
 \begin{landscape}
@@ -338,7 +339,7 @@ As figuras a seguir apresentam os modelos conceitual e logico elaborados para o 
 
 \clearpage
 \section{Dicionario de dados}
-O dicionario de dados descreve os atributos do modelo logico, seus tipos adotados para MySQL, suas finalidades e as chaves existentes ou definidas para implementacao. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). As restricoes fisicas, os valores padrao e as regras de dominio implementadas sao detalhados no script de criacao e validados pelo roteiro de testes.
+O dicionario de dados descreve os atributos do modelo logico, seus tipos adotados para MySQL, suas finalidades e as chaves existentes ou definidas para implementacao. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). O DDL detalha as restricoes fisicas; o roteiro testa os cenarios indicados na Secao~\ref{sec:implementacao-validacao}, sem cobrir todas as regras de negocio descritas neste documento.
 
 \begingroup
 \small
@@ -597,9 +598,9 @@ O dicionario de dados descreve os atributos do modelo logico, seus tipos adotado
 
 \section{Análise de normalização}
 \subsection{Escopo e dependências funcionais consideradas}
-Foram avaliadas as 31 relações do modelo lógico. A análise considera as chaves primárias, as chaves estrangeiras marcadas como únicas no modelo e as regras de negócio que definem identificadores alternativos. As dependências funcionais são inferidas dessas chaves: cada chave candidata determina os demais atributos da respectiva relação. Como o projeto ainda não possui dados de implementação, esta é uma avaliação estrutural do esquema.
+Foram avaliadas as 31 relacoes do modelo logico. O banco foi implementado e exercitado com dados sinteticos temporarios, mas a analise de normalizacao permanece estrutural: considera as chaves candidatas e as dependencias funcionais decorrentes das regras do esquema, e nao depende de dados de producao. A fundamentacao relacional segue o modelo de Codd (1970).
 
-O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas e as unicidades definidas. As regras RB29 e RB32 determinam a unicidade do código de barras informado e a identificação de lote pela combinação de produto e número do lote. Essas restrições, assim como as unicidades de CPF, CNPJ e login, deverão ser representadas nos modelos e implementadas no banco.
+O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas e as unicidades definidas. As regras RB29 e RB32 determinam a unicidade do codigo de barras informado e a identificacao de lote pela combinacao de produto e numero do lote. O DDL implementa essas restricoes, assim como as unicidades de CPF, CNPJ, login e das referencias que representam relacoes 1:1.
 
 \begingroup
 \small
@@ -622,12 +623,12 @@ O Quadro~\ref{tab:chaves-normalizacao} resume as chaves consideradas e as unicid
 \endfoot
 \hline
 \endlastfoot
-Produto & \texttt{id}; \url{codigo_barras} & Código de barras único quando informado (RB29); adicionar restrição aos modelos.\\\hline
+Produto & \texttt{id}; \url{codigo_barras} & Codigo de barras unico quando informado (RB29); implementado no DDL.\\\hline
 Categoria & \texttt{id} & --\\\hline
 Fabricante & \texttt{id}; \texttt{cnpj} & CNPJ único.\\\hline
 Medicamento & \texttt{id} & Chave primaria compartilhada com a chave estrangeira para Produto.\\\hline
 \url{Principio_Ativo} & \texttt{id} & --\\\hline
-Lote & \texttt{id}; (\url{fk_Produto_id}, \url{numero_lote}) & Chave alternativa da RB32; adicionar restrição composta aos modelos.\\\hline
+Lote & \texttt{id}; (\url{fk_Produto_id}, \url{numero_lote}) & Chave alternativa composta da RB32; implementada como UNIQUE no DDL.\\\hline
 \url{Movimentacao_Estoque} & \texttt{id} & --\\\hline
 \url{Ajuste_Estoque} & \texttt{id} & --\\\hline
 Fornecedor & \texttt{id}; \texttt{cnpj} & CNPJ único.\\\hline
@@ -660,48 +661,81 @@ Prescritor & \texttt{id} & A unicidade do registro profissional não foi definid
 As relações atendem estruturalmente à 1FN: cada campo representa um valor por registro, sem listas de telefones, e-mails, endereços ou princípios ativos armazenadas dentro de uma única coluna. Os contatos de clientes e fornecedores foram separados em relações próprias, e a associação entre medicamentos e princípios ativos foi representada por uma relação associativa. Campos textuais, como observações e descrições, são tratados como valores atômicos do ponto de vista relacional; seu conteúdo livre não representa uma lista estruturada de atributos.
 
 \subsection{Segunda Forma Normal (2FN)}
-As relações cuja chave primária é simples atendem à 2FN, pois não existe uma dependência parcial em uma chave de um único atributo. A única chave primária composta é a de \texttt{Medicamento\_Principio\_Ativo}; essa relação contém somente as duas chaves estrangeiras que compõem a própria chave, sem atributo não-chave sujeito a dependência parcial. A chave alternativa composta de \texttt{Lote}, definida por produto e número do lote, identifica o registro completo; essa regra deve ser implementada como restrição única composta.
+As relacoes cuja chave primaria e simples atendem a 2FN, pois nao existe dependencia parcial em uma chave de um unico atributo. A unica chave primaria composta e a de \texttt{Medicamento\_Principio\_Ativo}; essa relacao contem somente as duas chaves estrangeiras que compoem a propria chave, sem atributo nao-chave sujeito a dependencia parcial. A chave alternativa composta de \texttt{Lote}, definida por produto e numero do lote, esta implementada como restricao unica composta no DDL.
 
 \subsection{Terceira Forma Normal (3FN)}
 Considerando as dependências funcionais identificadas, não há atributo não-chave que determine outro atributo não-chave dentro da mesma relação. Dados de categorias e fabricantes ficam em suas próprias relações, dados de fornecedores não são repetidos em compras, dados de perfil não são copiados para usuários e os contatos múltiplos foram decompostos em relações separadas. Assim, não foram identificadas dependências transitivas que exijam nova decomposição para atingir a 3FN.
 
 \subsection{Forma Normal de Boyce-Codd (BCNF)}
-Pelas dependências funcionais identificadas, os determinantes não triviais são chaves candidatas: as chaves primárias simples, as referências únicas de \texttt{Usuario}, \texttt{Cancelamento} e \texttt{Item\_Venda}, as unicidades definidas para CPF, CNPJ e login, o código de barras quando preenchido e a identificação composta de lote. Sob esse conjunto de dependências, as relações atendem à BCNF. A conclusão depende da implementação das restrições de unicidade apontadas no Quadro~\ref{tab:chaves-normalizacao} e da confirmação de que não há outras regras de negócio que criem dependências funcionais.
+Pelas dependencias funcionais identificadas, os determinantes nao triviais sao chaves candidatas: as chaves primarias simples, as referencias unicas de \texttt{Usuario}, \texttt{Cancelamento} e \texttt{Item\_Venda}, as unicidades definidas para CPF, CNPJ e login, o codigo de barras quando preenchido e a identificacao composta de lote. Sob esse conjunto de dependencias, as relacoes atendem a BCNF. As unicidades consideradas estao implementadas no DDL; a conclusao continua condicionada a que as dependencias funcionais e as regras de negocio identificadas sejam completas.
 
-\subsection{Pontos de atenção para a implementação}
-Os itens a seguir não constituem, por si só, violações de BCNF, mas precisam de definição para preservar a consistência dos dados:
+\subsection{Decisoes refletidas no modelo fisico}
+As decisoes abaixo foram incorporadas ao DDL ou permanecem sob responsabilidade da aplicacao cliente:
 \begin{itemize}
-\item \texttt{Item\_Venda.valor\_total} permanecerá armazenado. Seu valor deve ser atualizado de acordo com quantidade, preço unitário e desconto, preservando a consistência com os valores da venda.
-\item O custo real será registrado em \texttt{Item\_Recebimento.custo\_unitario\_real}; o atributo \texttt{Lote.custo\_unitario} será removido do modelo.
-\item CPF de Cliente e Funcionário, CNPJ de Fornecedor e Fabricante e login de Usuário serão únicos. O número de registro do prescritor permanece sem unicidade definida enquanto não houver identificação do conselho ou profissão.
-\item \texttt{Compra.status} permanecerá armazenado e deverá ser atualizado sempre que os recebimentos forem registrados, na mesma operação transacional que atualiza os dados relacionados.
-\item As restrições do modelo físico deverão impedir que um item recebido se vincule a uma compra diferente da associada ao recebimento ou a um lote de outro produto; também deverão garantir que o lote movimentado em uma venda pertença ao produto vendido.
-\item A quantidade de cada movimentação será positiva; o tipo da movimentação determinará se o saldo aumenta ou diminui. Os valores permitidos para o tipo serão definidos na etapa de implementação.
+\item \texttt{Item\_Venda.valor\_total} permanece armazenado. A aplicacao deve recalcula-lo a partir da quantidade, preco unitario e desconto; o DDL atual nao confere essa formula entre colunas.
+\item O custo real e registrado em \texttt{Item\_Recebimento.custo\_unitario\_real}; \texttt{Lote.custo\_unitario} foi removido do modelo.
+\item CPF de Cliente e Funcionario, CNPJ de Fornecedor e Fabricante e login de Usuario sao unicos no DDL. O registro profissional do prescritor permanece sem unicidade porque o modelo nao identifica o conselho ou a profissao.
+\item \texttt{Compra.status} e armazenado e recalculado pela procedure e pelos triggers do DDL quando itens de recebimento sao inseridos, alterados ou excluidos.
+\item Triggers do DDL validam a coerencia entre compra, recebimento e lote, e entre item de venda e item de receita/produto.
+\item O DDL exige quantidade de movimentacao positiva e limita o tipo a ENTRADA, SAIDA, AJUSTE\_ENTRADA ou AJUSTE\_SAIDA. Essas restricoes nao impedem, por si, que o saldo agregado fique negativo.
 \end{itemize}
 
 \section{Implementacao fisica e validacao}
 \label{sec:implementacao-validacao}
 
 \subsection{Modelo fisico}
-O modelo fisico foi implementado para MySQL 8.0 no arquivo \texttt{Drogaria\_Fisico.sql}. O script cria 31 tabelas, uma view de consulta do estoque, uma procedure para recalcular a situacao de compras e sete triggers de integridade. As restricoes incluem chaves primarias e estrangeiras, unicidades, dominios e verificacoes de consistencia entre compras, recebimentos, lotes, vendas e receitas.
+O modelo fisico foi implementado para MySQL 8.0 no arquivo \texttt{Drogaria\_Fisico.sql}. O script cria 31 tabelas, uma view de saldo de estoque, uma procedure para recalcular a situacao de compras e sete triggers. O DDL define chaves primarias e estrangeiras, unicidades e restricoes \texttt{CHECK}; os triggers validam a coerencia entre compra, recebimento e lote, atualizam o status de compras e validam a associacao entre venda e receita. O comportamento de \texttt{CHECK}, views e triggers segue a documentacao do MySQL 8.0 (Oracle, s. d.).
 
 \subsection{Roteiro de testes}
-O arquivo \texttt{Drogaria\_Testes.sql} prepara dados temporarios e executa operacoes de inclusao, consulta, atualizacao e exclusao nas 31 tabelas. As alteracoes ficam em uma transacao desfeita por \texttt{ROLLBACK}, de modo que a execucao nao deixa os registros de teste no banco.
+O arquivo \texttt{Drogaria\_Testes.sql} prepara dados sinteticos e executa \texttt{INSERT}, \texttt{UPDATE} e \texttt{DELETE} nas 31 tabelas. As consultas de leitura verificam os fluxos de compra, venda e saldo de estoque; nao ha uma consulta individual para cada tabela. As alteracoes de dados ficam em uma transacao desfeita por \texttt{ROLLBACK}.
 
 \subsection{Execucao e resultados}
-O script de criacao e o roteiro de testes foram executados em um banco MySQL 8.0.46 descartavel. O DDL foi aplicado sem erros. Os testes confirmaram os seguintes comportamentos:
+O DDL e o roteiro foram executados em um banco MySQL 8.0.46 descartavel, sem erros de criacao. Os testes confirmaram os seguintes cenarios:
 
 \begin{itemize}
 \item O banco rejeita um item recebido associado a uma compra diferente daquela do recebimento.
 \item O banco rejeita o recebimento de um lote pertencente a produto diferente daquele do item comprado.
 \item O banco rejeita um item de venda cujo produto diverge do medicamento prescrito.
 \item O banco rejeita a associacao de um item de receita pertencente a outra venda.
-\item No fluxo valido de recebimento parcial e posterior conclusao, o status da compra muda de \texttt{PARCIALMENTE\_RECEBIDA} para \texttt{CONCLUIDA}; a consulta da view de estoque tambem retornou o saldo esperado para os movimentos de teste.
+\item O status da compra passou de \texttt{PARCIALMENTE\_RECEBIDA} para \texttt{CONCLUIDA} apos recebimentos validos. A view retornou saldo \texttt{8,500} para as movimentacoes inseridas separadamente no roteiro; esse resultado nao demonstra que o recebimento criou uma movimentacao de entrada.
 \end{itemize}
 
-Os testes validam os cenarios incluidos no roteiro e as restricoes exercitadas. Eles nao substituem testes de todas as regras de negocio nem a implementacao de uma aplicacao cliente.
+Os testes cobrem somente os cenarios descritos acima e nao comprovam todas as regras funcionais. A aplicacao cliente nao faz parte desta implementacao.
 
+\subsection{Limites do DDL e responsabilidades da aplicacao}
+O DDL atual nao implementa todos os requisitos funcionais como automacoes de banco. Os fluxos abaixo devem ser executados pela aplicacao cliente, em transacoes consistentes, ou receber implementacao complementar antes de serem considerados garantidos:
+
+\begin{itemize}
+\item O registro de um \texttt{Item\_Recebimento} nao cria automaticamente uma \texttt{Movimentacao\_Estoque}. A aplicacao deve registrar a entrada correspondente na mesma transacao. Conforme a decisao de modelagem, a entrada e rastreada pelo lote, sem chave estrangeira direta para o item recebido; por isso o DDL nao identifica qual recebimento especifico originou cada entrada.
+\item A view calcula o saldo a partir das movimentacoes, mas o DDL nao bloqueia saldo negativo nem valida disponibilidade, validade do lote ou priorizacao FEFO antes de uma venda.
+\item O DDL nao efetua a reversao de estoque no cancelamento nem vincula diretamente a movimentacao de retorno ao registro de cancelamento. A aplicacao deve aplicar a regra de devolucao aos lotes originais e preservar a rastreabilidade.
+\item O DDL nao valida totais entre varias linhas de pagamento e estorno. Impedir pagamento acima do saldo, estorno acima do valor ainda disponivel e conclusao de venda sem pagamento integral depende do fluxo transacional da aplicacao.
+\item A protecao da URL do documento de receita e a autorizacao por perfil tambem dependem da aplicacao e da configuracao de acesso; armazenar a referencia no banco nao protege o arquivo externo.
+\end{itemize}
+
+Essas regras permanecem no escopo funcional do sistema, mas nao foram demonstradas pelo DDL nem pelo roteiro atual. O registro de \texttt{valor\_total} em \texttt{Item\_Venda} tambem requer recalculo pela aplicacao, pois nao ha restricao ou trigger que compare o valor com quantidade, preco e desconto.
 \section{Conclusao}
-O documento consolida os requisitos do sistema de gestao de drogaria, apresenta os modelos conceitual e logico, o dicionario de dados e a analise de normalizacao, e registra a implementacao fisica em MySQL e sua validacao por meio de um roteiro de testes transacionais. O conjunto fornece uma base documentada para a continuidade e a demonstracao do projeto.
+O documento consolida os requisitos, modelos conceitual e logico, dicionario de dados e analise de normalizacao, e descreve o DDL fisico e os testes executados. O esquema implementa as restricoes relacionais e os cenarios explicitamente descritos; regras que dependem de fluxos transacionais da aplicacao estao identificadas como pendentes de implementacao no cliente.
+\clearpage
+\section*{REFERÊNCIAS}
+\addcontentsline{toc}{section}{REFERÊNCIAS}
+\begingroup
+\small
+\singlespacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
 
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. \textbf{ABNT NBR 10520:2023}: informação e documentação: citações em documentos: apresentação. Rio de Janeiro: ABNT, 2023.
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. \textbf{ABNT NBR 14724:2024}: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2024.
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. \textbf{ABNT NBR 6023:2025}: informação e documentação: referências: elaboração. Rio de Janeiro: ABNT, 2025.
+
+CHEN, Peter Pin-Shan. The entity-relationship model: toward a unified view of data. \textit{ACM Transactions on Database Systems}, v. 1, n. 1, p. 9--36, 1976. DOI: \url{https://doi.org/10.1145/320434.320440}.
+
+CODD, Edgar F. A relational model of data for large shared data banks. \textit{Communications of the ACM}, v. 13, n. 6, p. 377--387, 1970. DOI: \url{https://doi.org/10.1145/362384.362685}.
+
+ORACLE. \textbf{MySQL 8.0 Reference Manual}. [S. l.]: Oracle, [s. d.]. Disponível em: \url{https://dev.mysql.com/doc/refman/8.0/en/}. Acesso em: 27 out. 2026.
+
+\endgroup
 \end{document}
