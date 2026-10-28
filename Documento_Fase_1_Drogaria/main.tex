@@ -124,7 +124,10 @@
 \end{center}
 \end{titlepage}
 
+\begingroup
+\small
 \tableofcontents
+\endgroup
 \clearpage
 
 \section{Identificacao do projeto}
@@ -297,11 +300,11 @@ Organizar e manter consistentes os dados operacionais da drogaria, permitindo re
 
 \section{Premissas e observacoes}
 \begin{itemize}
-\item O banco de dados sera desenvolvido em MySQL, com modelagem e implementacao previstas para fases posteriores.
+\item O banco foi implementado em MySQL. O script de criacao, as rotinas de integridade e o roteiro de validacao estao descritos na Secao~\ref{sec:implementacao-validacao}.
 \item A URL ou referencia da receita aponta para documento armazenado fora do banco; o armazenamento externo devera oferecer controle de acesso apropriado.
 \item As regras de validade, assinatura e dispensacao de receitas variam conforme o tipo de documento e medicamento. O sistema devera respeitar os requisitos aplicaveis, sem pretender substituir uma analise regulatoria completa.
 \item Os relatorios operacionais serao implementados como consultas SQL e, se util, views. Nao sera criada uma entidade de negocio chamada Relatorio.
-\item Esta secao consolida os requisitos que orientaram as etapas seguintes. O dicionario registra os atributos e tipos do modelo logico, e a analise de normalizacao e apresentada neste documento. O modelo fisico, o script SQL e a validacao do banco serao tratados nas proximas etapas.
+\item Esta secao registra as premissas usadas na modelagem. O dicionario descreve os atributos e tipos do modelo logico; a analise de normalizacao, a implementacao fisica em MySQL e os testes do banco estao documentados nas secoes seguintes.
 \end{itemize}
 
 \section{Modelos de dados}
@@ -335,7 +338,7 @@ As figuras a seguir apresentam os modelos conceitual e logico elaborados para o 
 
 \clearpage
 \section{Dicionario de dados}
-O dicionario de dados descreve os atributos do modelo logico, seus tipos previstos para MySQL, suas finalidades e as chaves existentes ou definidas para implementacao. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). A obrigatoriedade de preenchimento, valores padrao e regras de dominio serao detalhados junto com as restricoes do modelo fisico.
+O dicionario de dados descreve os atributos do modelo logico, seus tipos adotados para MySQL, suas finalidades e as chaves existentes ou definidas para implementacao. Os marcadores apresentados na ultima coluna sao: PK (chave primaria), FK (chave estrangeira) e UNIQUE (valor unico). As restricoes fisicas, os valores padrao e as regras de dominio implementadas sao detalhados no script de criacao e validados pelo roteiro de testes.
 
 \begingroup
 \small
@@ -676,7 +679,29 @@ Os itens a seguir não constituem, por si só, violações de BCNF, mas precisam
 \item A quantidade de cada movimentação será positiva; o tipo da movimentação determinará se o saldo aumenta ou diminui. Os valores permitidos para o tipo serão definidos na etapa de implementação.
 \end{itemize}
 
+\section{Implementacao fisica e validacao}
+\label{sec:implementacao-validacao}
+
+\subsection{Modelo fisico}
+O modelo fisico foi implementado para MySQL 8.0 no arquivo \texttt{Drogaria\_Fisico.sql}. O script cria 31 tabelas, uma view de consulta do estoque, uma procedure para recalcular a situacao de compras e sete triggers de integridade. As restricoes incluem chaves primarias e estrangeiras, unicidades, dominios e verificacoes de consistencia entre compras, recebimentos, lotes, vendas e receitas.
+
+\subsection{Roteiro de testes}
+O arquivo \texttt{Drogaria\_Testes.sql} prepara dados temporarios e executa operacoes de inclusao, consulta, atualizacao e exclusao nas 31 tabelas. As alteracoes ficam em uma transacao desfeita por \texttt{ROLLBACK}, de modo que a execucao nao deixa os registros de teste no banco.
+
+\subsection{Execucao e resultados}
+O script de criacao e o roteiro de testes foram executados em um banco MySQL 8.0.46 descartavel. O DDL foi aplicado sem erros. Os testes confirmaram os seguintes comportamentos:
+
+\begin{itemize}
+\item O banco rejeita um item recebido associado a uma compra diferente daquela do recebimento.
+\item O banco rejeita o recebimento de um lote pertencente a produto diferente daquele do item comprado.
+\item O banco rejeita um item de venda cujo produto diverge do medicamento prescrito.
+\item O banco rejeita a associacao de um item de receita pertencente a outra venda.
+\item No fluxo valido de recebimento parcial e posterior conclusao, o status da compra muda de \texttt{PARCIALMENTE\_RECEBIDA} para \texttt{CONCLUIDA}; a consulta da view de estoque tambem retornou o saldo esperado para os movimentos de teste.
+\end{itemize}
+
+Os testes validam os cenarios incluidos no roteiro e as restricoes exercitadas. Eles nao substituem testes de todas as regras de negocio nem a implementacao de uma aplicacao cliente.
+
 \section{Conclusao}
-O levantamento estabelece o escopo funcional inicial do sistema de gestao de drogaria e registra as regras de integridade, rastreabilidade, seguranca e operacao consolidadas. O documento apresenta o DER conceitual em notacao de Peter Chen, o modelo logico e a analise estrutural de normalizacao. Essas etapas servirao de base para a implementacao fisica no MySQL, a elaboracao do script SQL e a validacao do banco.
+O documento consolida os requisitos do sistema de gestao de drogaria, apresenta os modelos conceitual e logico, o dicionario de dados e a analise de normalizacao, e registra a implementacao fisica em MySQL e sua validacao por meio de um roteiro de testes transacionais. O conjunto fornece uma base documentada para a continuidade e a demonstracao do projeto.
 
 \end{document}
